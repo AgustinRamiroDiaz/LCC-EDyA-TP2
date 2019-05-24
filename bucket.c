@@ -1,4 +1,6 @@
 #include "bucket.h"
+#include <malloc.h>
+#include <assert.h>
 
 Bucket * crearBucket(ListaDePalabras listaDePalabras)
 {

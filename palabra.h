@@ -12,4 +12,8 @@ typedef struct {
 
 ListaDePalabras * crearListaDePalabras(int cantidadDePalabras);
 
-void agregarPalabraALista(ListaDePalabras * listaDePalabras, Palabra * palabra);
+void agregarPalabraALista(Palabra * palabra, ListaDePalabras * listaDePalabras);
+
+ListaDePalabras * crearListaDePalabrasDesdeArchivo(FILE * archivo);
+
+Palabra * crearPalabra(wchar_t * letras);
