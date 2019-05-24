@@ -99,7 +99,7 @@ void hash_palabras_a_buckets(FuncionHash hash, wchar_t** listaPalabras, int cant
   for (size_t i = 0; i < cantidadPalabrasEntrada; i++) {
     palabraHasheada = hash(listaPalabras[i]) % bucketArraySize;
     bucket_insertar(bucketArray[palabraHasheada], listaPalabras[i]);
-    printf("%d\n", i);
+    //printf("%d\n", i);
     //wprintf(L"%ls", listaPalabras[i]);
   }
 }
@@ -130,11 +130,13 @@ void archivo_a_matriz(char* nombreArchivoEntrada, wchar_t** listaPalabras){
   FILE* inputFile = fopen(nombreArchivoEntrada, "r");
   wchar_t buff[69];
 
-  for(int i = 0; fwscanf(inputFile, L"%ls", buff) == 1; i++){
+  int i;
+  for(i = 0; fwscanf(inputFile, L"%ls", buff) == 1; i++){
     listaPalabras[i] = malloc(sizeof(wchar_t) * (wcslen(buff)+1));
+    assert(listaPalabras[i]);
     wcscpy(listaPalabras[i], buff);
   }
-
+  printf("%d\n", i);
   fclose(inputFile);
 }
 
@@ -156,10 +158,20 @@ int main(int argc, char const *argv[])
 
   int keyArray[bucketArraySize];
 
-  wchar_t* listaPalabras[cantidadPalabrasEntrada];
+  wchar_t** listaPalabras = malloc(sizeof(wchar_t*) * cantidadPalabrasEntrada);
+  assert(listaPalabras);
 
   //Guardamos las palabras del diccionario dado en listaPalabras
   archivo_a_matriz("listado-general.txt", listaPalabras);
+
+  FILE* test = fopen("testArchivo.txt", "w");
+  size_t i;
+  for (i = 0; i < cantidadPalabrasEntrada; i++) {
+    fwprintf(test, L"%ls\n", listaPalabras[i]);
+  }
+  printf("i de la impresion: %d\n", i);
+
+  printf("Facu was here\n");
 
   //Guardamos las palabras en sus correspondientes buckets
   hash_palabras_a_buckets(&djb2, listaPalabras, cantidadPalabrasEntrada, bucketArray, bucketArraySize);
