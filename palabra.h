@@ -6,6 +6,10 @@ typedef struct {
 } Palabra;
 
 typedef struct {
-    int cantidad;
+    int cantidad, capacidad;
     Palabra * palabras;
 } ListaDePalabras;
+
+ListaDePalabras * crearListaDePalabras(int cantidadDePalabras);
+
+void agregarPalabraALista(ListaDePalabras * listaDePalabras, Palabra * palabra);
