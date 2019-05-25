@@ -2,6 +2,7 @@
 #include <malloc.h>
 #include "tabla_hash.h"
 #include "hash.h"
+#include "archivo.h"
 #include "constantes.h"
 
 TablaHash * crearTablaHash(ListaDePalabras * universo)
@@ -30,9 +31,9 @@ void crearBuckets(TablaHash * tablaHash, ListaDePalabras ** gruposDePalabras)
 
 ListaDePalabras ** agruparPalabras(TablaHash * tablaHash, ListaDePalabras * listaDePalabras)
 {
-    ListaDePalabras ** gruposDePalabras = crearGruposDePalabras(tablaHash, listaDePalabras);
     Palabra * palabraActual;
     int palabraHasheada;
+    ListaDePalabras ** gruposDePalabras = crearGruposDePalabras(tablaHash, listaDePalabras);
 
     for (int i = 0; i < listaDePalabras->cantidad; i++) {
         palabraActual = listaDePalabras->palabras[i];
@@ -57,12 +58,14 @@ ListaDePalabras ** crearGruposDePalabras(TablaHash * tablaHash, ListaDePalabras 
 
 void imprimirTablaHashEnArchivo(TablaHash tablaHash, char * nombreDeArchivo)
 {
-    FILE * archivo = fopen(nombreDeArchivo, "w");
+    FILE * archivo = abrirArchivo(nombreDeArchivo, "w");
 
     fwprintf(archivo, L"%d\n", tablaHash.tamano);
     for (int i = 0; i < tablaHash.tamano; i++) {
         imprimirBucketEnArchivo(*tablaHash.buckets[i], archivo);
     }
+
+    cerrarArchivo(archivo);
 }
 
 int obtenerHashPrincipal(TablaHash tablaHash, Palabra palabra)

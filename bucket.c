@@ -36,7 +36,6 @@ void llenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras)
 
         if (esValida) {
             bucket->constanteDeHasheo = constanteDeHasheo;
-            printf("%ld\n", constanteDeHasheo);
         }
     }
 
