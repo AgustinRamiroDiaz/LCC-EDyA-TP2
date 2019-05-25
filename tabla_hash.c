@@ -54,5 +54,5 @@ unsigned long hashearPalabra(Palabra palabra)
 
 int calcularCantidadDeBuckets(int cantidadDePalabras)
 {
-    return ceil(sqrt((float) cantidadDePalabras));
+    return ceil(pow(cantidadDePalabras, 25.0/30.0));
 }

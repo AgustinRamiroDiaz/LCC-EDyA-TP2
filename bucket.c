@@ -23,7 +23,7 @@ Bucket * armarBucket(int cantidadDePalabras)
 
 int calcularTamanoDeBucket(int cantidadDePalabras)
 {
-    return cantidadDePalabras * cantidadDePalabras;
+    return cantidadDePalabras * 2;
 }
 
 void llenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras)
@@ -36,6 +36,7 @@ void llenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras)
 
         if (esValida) {
             bucket->constanteDeHasheo = constanteDeHasheo;
+            printf("%ld\n", constanteDeHasheo);
         }
     }
 
