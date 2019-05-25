@@ -10,7 +10,7 @@ int main(int argc, char const *argv[])
 {
     setlocale(LC_CTYPE, "");
 
-    FILE * archivo = fopen("listado-general-txt", "r");
+    FILE * archivo = fopen("listado-general.txt", "r");
     ListaDePalabras * universo = crearListaDePalabrasDesdeArchivo(archivo);
     TablaHash * tablaHash = crearTablaHash(universo);
 

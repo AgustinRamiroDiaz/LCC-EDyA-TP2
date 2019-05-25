@@ -4,8 +4,10 @@
 ListaDePalabras * crearListaDePalabrasDesdeArchivo(FILE * archivo)
 {
     ListaDePalabras * listaDePalabras = crearListaDePalabras(1024);
-    wchar_t buffer[100];
+    wchar_t buffer[500];
+
     while(fwscanf(archivo, L"%ls", buffer) == 1) {
+        printf("llega\n");
         agregarPalabraALista(crearPalabra(buffer), listaDePalabras);
     }
 
@@ -15,7 +17,9 @@ ListaDePalabras * crearListaDePalabrasDesdeArchivo(FILE * archivo)
 ListaDePalabras * crearListaDePalabras(int cantidadDePalabras)
 {
     ListaDePalabras * listaDePalabras = malloc(sizeof(ListaDePalabras));
+    listaDePalabras->palabras = malloc(sizeof(Palabra) * cantidadDePalabras);
     listaDePalabras->capacidad = cantidadDePalabras;
+    listaDePalabras->cantidad = 0;
 
     return listaDePalabras;
 }
@@ -26,7 +30,7 @@ void agregarPalabraALista(Palabra * palabra, ListaDePalabras * listaDePalabras)
         agrandarListaDePalabras(listaDePalabras);
     }
 
-    listaDePalabras->palabras[listaDePalabras->cantidad];
+    listaDePalabras->palabras[listaDePalabras->cantidad] = palabra;
     listaDePalabras->cantidad++;
 }
 
@@ -43,6 +47,7 @@ Palabra * crearPalabra(wchar_t * letras)
     Palabra * palabra = malloc(sizeof(Palabra));
 
     palabra->longitud = wcslen(letras);
+    printf("len: %d\n", palabra->longitud)
     palabra->letras = malloc(sizeof(wchar_t) * palabra->longitud);
     wcscpy(palabra->letras, letras);
 
