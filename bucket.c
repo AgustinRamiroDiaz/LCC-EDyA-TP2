@@ -53,7 +53,7 @@ int probarLlenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras, unsigne
         palabraActual = listaDePalabras.palabras[i];
         palabraHasheada = hashConConstante(*palabraActual, constanteDeHasheo) % bucket->tamano;
 
-        if (bucket->tablaHash[palabraHasheada] == NULL) {
+        if (NULL == bucket->tablaHash[palabraHasheada]) {
             bucket->tablaHash[palabraHasheada] = palabraActual;
         } else {
             colisiona = 1;

@@ -14,7 +14,7 @@ int main(int argc, char const *argv[])
     ListaDePalabras * universo = crearListaDePalabrasDesdeArchivo(archivo);
     TablaHash * tablaHash = crearTablaHash(universo);
 
-    imprimirTablaHashEnArchivo(*tablaHash, "dou.txt");
+    imprimirTablaHashEnArchivo(*tablaHash, "tabla-hash.txt");
 
     return 0;
 }

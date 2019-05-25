@@ -1,9 +1,10 @@
-#include "hash.h"
 #include <wchar.h>
+#include "hash.h"
+#include "constantes.h"
 
 unsigned long djb2(Palabra palabra)
 {
-  unsigned long hash = 5381;
+  unsigned long hash = CONSTANTE_HASHEO;
 
   int letra;
   for (int i=0; letra = palabra.letras[i]; i++) {

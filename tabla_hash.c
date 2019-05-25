@@ -2,6 +2,7 @@
 #include <malloc.h>
 #include "tabla_hash.h"
 #include "hash.h"
+#include "constantes.h"
 
 TablaHash * crearTablaHash(ListaDePalabras * universo)
 {
@@ -54,5 +55,5 @@ unsigned long hashearPalabra(Palabra palabra)
 
 int calcularCantidadDeBuckets(int cantidadDePalabras)
 {
-    return ceil(pow(cantidadDePalabras, 25.0/30.0));
+    return ceil(pow(cantidadDePalabras, POTENCIA_TAMANO_BUCKETS));
 }

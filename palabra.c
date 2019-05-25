@@ -1,10 +1,11 @@
 #include <malloc.h>
 #include "palabra.h"
+#include "constantes.h"
 
 ListaDePalabras * crearListaDePalabrasDesdeArchivo(FILE * archivo)
 {
-    ListaDePalabras * listaDePalabras = crearListaDePalabras(1024);
-    wchar_t buffer[500];
+    ListaDePalabras * listaDePalabras = crearListaDePalabras(TAMANO_INICIAL_LISTA);
+    wchar_t buffer[LARGO_MAXIMO_PALABRA];
 
     while(fwscanf(archivo, L"%ls", buffer) == 1) {
         agregarPalabraALista(crearPalabra(buffer), listaDePalabras);
