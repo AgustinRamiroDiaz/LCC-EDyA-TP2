@@ -6,7 +6,7 @@
 typedef struct {
     unsigned long constanteDeHasheo;
     int tamano, capacidad;
-    Palabra * tablaHash;
+    Palabra ** tablaHash;
 } Bucket;
 
 Bucket * crearBucket(ListaDePalabras listaDePalabras);

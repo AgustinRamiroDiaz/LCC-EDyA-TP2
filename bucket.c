@@ -1,6 +1,7 @@
-#include "bucket.h"
 #include <malloc.h>
 #include <assert.h>
+#include "bucket.h"
+#include "hash.h"
 
 Bucket * crearBucket(ListaDePalabras listaDePalabras)
 {
@@ -47,9 +48,9 @@ int probarLlenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras, unsigne
     Palabra * palabraActual;
     vaciarBucket(bucket);
 
-    for (int i = 0; i < listaDePalabras->cantidad && !colisiona; i++) {
-        palabraActual = listaDePalabras->palabras[i];
-        palabraHasheada = hashConConstante(palabraActual, constanteDeHasheo) % bucket->tamano;
+    for (int i = 0; i < listaDePalabras.cantidad && !colisiona; i++) {
+        palabraActual = listaDePalabras.palabras[i];
+        palabraHasheada = hashConConstante(*palabraActual, constanteDeHasheo) % bucket->tamano;
 
         if (bucket->tablaHash[palabraHasheada] == NULL) {
             bucket->tablaHash[palabraHasheada] = palabraActual;

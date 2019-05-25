@@ -10,7 +10,7 @@ typedef struct {
 
 typedef struct {
     int cantidad, capacidad;
-    Palabra * palabras;
+    Palabra ** palabras;
 } ListaDePalabras;
 
 ListaDePalabras * crearListaDePalabras(int cantidadDePalabras);
