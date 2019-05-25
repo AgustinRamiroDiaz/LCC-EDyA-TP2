@@ -1,21 +1,19 @@
 #include "hash.h"
 #include <wchar.h>
 
-unsigned long
-djb2(Palabra palabra)
+unsigned long djb2(Palabra palabra)
 {
   unsigned long hash = 5381;
 
   int letra;
   for (int i=0; letra = palabra->letras[i]; i++) {
-      hash = ((hash << 5) + hash) + c;
+      hash = ((hash << 5) + hash) + letra;
   }
 
   return hash;
 }
 
-unsigned long
-hashConConstante(Palabra palabra, unsigned long constante);
+unsigned long hashConConstante(Palabra palabra, unsigned long constante);
 {
   unsigned long hash = constante;
 
@@ -27,8 +25,7 @@ hashConConstante(Palabra palabra, unsigned long constante);
   return hash;
 }
 
-unsigned long
-sdbm(wchar_t *str)
+unsigned long sdbm(wchar_t *str)
 {
   unsigned long hash = 0;
   int c;
