@@ -21,6 +21,8 @@ int probarLlenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras, unsigne
 
 void limpiarBucket(Bucket * bucket);
 
+int obtenerHashSecundario(Bucket bucket, Palabra palabra);
+
 void imprimirBucketEnArchivo(Bucket bucket, FILE * archivo);
 
 #endif

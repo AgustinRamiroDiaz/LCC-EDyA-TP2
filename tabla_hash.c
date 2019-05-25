@@ -24,7 +24,7 @@ TablaHash * armarTablaHash(int cantidadDePalabras)
 void crearBuckets(TablaHash * tablaHash, ListaDePalabras ** gruposDePalabras)
 {
     for (int i=0; i < tablaHash->tamano; i++) {
-        tablaHash->buckets[i] = crearBucket(*listasDePalabras[i]);
+        tablaHash->buckets[i] = crearBucket(*gruposDePalabras[i]);
     }
 }
 
@@ -46,13 +46,13 @@ ListaDePalabras ** agruparPalabras(TablaHash * tablaHash, ListaDePalabras * pala
 ListaDePalabras ** crearGruposDePalabras(TablaHash * tablaHash, ListaDePalabras * palabras)
 {
     int elementosPorBucket = palabras->cantidad / tablaHash->tamano + 1;
-    ListaDePalabras * listasDePalabras = malloc(sizeof(ListaDePalabras*) * tablaHash->tamano);
+    ListaDePalabras ** gruposDePalabras = malloc(sizeof(ListaDePalabras*) * tablaHash->tamano);
 
     for (int i=0; i < tablaHash->tamano; i++) {
-        listasDePalabras[i] = crearListaDePalabras(elementosPorBucket);
+        gruposDePalabras[i] = crearListaDePalabras(elementosPorBucket);
     }
 
-    return listaDePalabras;
+    return gruposDePalabras;
 }
 
 void imprimirTablaHashEnArchivo(TablaHash tablaHash, char * nombreDeArchivo)

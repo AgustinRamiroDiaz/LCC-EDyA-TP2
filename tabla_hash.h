@@ -20,7 +20,7 @@ ListaDePalabras ** crearGruposDePalabras(TablaHash * tablaHash, ListaDePalabras 
 
 void imprimirTablaHashEnArchivo(TablaHash tablaHash, char * nombreDeArchivo);
 
-unsigned long hashearPalabra(Palabra palabra);
+int obtenerHashPrincipal(TablaHash tablaHash, Palabra palabra);
 
 int calcularCantidadDeBuckets(int cantidadDePalabras);
 
