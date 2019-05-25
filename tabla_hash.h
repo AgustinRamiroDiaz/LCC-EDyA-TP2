@@ -12,6 +12,12 @@ TablaHash * crearTablaHash(ListaDePalabras * universo);
 
 TablaHash * armarTablaHash(int cantidadDePalabras);
 
+void crearBuckets(TablaHash * tablaHash, ListaDePalabras ** gruposDePalabras);
+
+ListaDePalabras ** agruparPalabras(TablaHash * tablaHash, ListaDePalabras * palabras);
+
+ListaDePalabras ** crearGruposDePalabras(TablaHash * tablaHash, ListaDePalabras * palabras);
+
 void imprimirTablaHashEnArchivo(TablaHash tablaHash, char * nombreDeArchivo);
 
 unsigned long hashearPalabra(Palabra palabra);

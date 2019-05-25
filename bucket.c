@@ -47,11 +47,13 @@ int probarLlenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras, unsigne
 {
     int palabraHasheada, colisiona = 0;
     Palabra * palabraActual;
+
     limpiarBucket(bucket);
+    bucket->constanteDeHasheo = constanteDeHasheo;
 
     for (int i = 0; i < listaDePalabras.cantidad && !colisiona; i++) {
         palabraActual = listaDePalabras.palabras[i];
-        palabraHasheada = hashConConstante(*palabraActual, constanteDeHasheo) % bucket->tamano;
+        palabraHasheada = obtenerHashSecundario(*bucket, *palabraActual);
 
         if (NULL == bucket->tablaHash[palabraHasheada]) {
             bucket->tablaHash[palabraHasheada] = palabraActual;
@@ -82,4 +84,9 @@ void imprimirBucketEnArchivo(Bucket bucket, FILE * archivo)
             fwprintf(archivo, L"%d %ls\n", i, palabraActual->letras);
         }
     }
+}
+
+int obtenerHashSecundario(Bucket bucket, Palabra palabra)
+{
+    return hashConConstante(palabra, bucket.constanteDeHasheo) % bucket.tamano;
 }
