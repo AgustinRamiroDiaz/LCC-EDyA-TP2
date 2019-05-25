@@ -1,5 +1,7 @@
 #include <math.h>
+#include <malloc.h>
 #include "tabla_hash.h"
+#include "hash.h"
 
 TablaHash * crearTablaHash(ListaDePalabras * universo)
 {
@@ -16,12 +18,12 @@ TablaHash * crearTablaHash(ListaDePalabras * universo)
 
     for (int i = 0; i < universo->cantidad; i++) {
         palabraActual = universo->palabras[i];
-        palabraHasheada = hashearPalabra(palabraActual) % tablaHash->tamano;
+        palabraHasheada = hashearPalabra(*palabraActual) % tablaHash->tamano;
         agregarPalabraALista(palabraActual, listasDePalabras[palabraHasheada]);
     }
 
     for (int i=0; i < tablaHash->tamano; i++) {
-        tablaHash->buckets[i] = crearBucket(listasDePalabras[i]);
+        tablaHash->buckets[i] = crearBucket(*listasDePalabras[i]);
     }
 
     return tablaHash;
@@ -39,9 +41,9 @@ void imprimirTablaHashEnArchivo(TablaHash tablaHash, char * nombreDeArchivo)
 {
     FILE * archivo = fopen(nombreDeArchivo, "w");
 
-    fwprintf(L"%d\n", tablaHash.tamano);
-    for (int i = 0; i < tablaHash.tamano, i++) {
-        imprimirBucketEnArchivo(tablaHash.buckets[i], archivo);
+    fwprintf(archivo, L"%d\n", tablaHash.tamano);
+    for (int i = 0; i < tablaHash.tamano; i++) {
+        imprimirBucketEnArchivo(*tablaHash.buckets[i], archivo);
     }
 }
 
@@ -52,5 +54,5 @@ unsigned long hashearPalabra(Palabra palabra)
 
 int calcularCantidadDeBuckets(int cantidadDePalabras)
 {
-    return ceil(sqrt((float) cantidadPalabras));
+    return ceil(sqrt((float) cantidadDePalabras));
 }

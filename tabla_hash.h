@@ -5,7 +5,7 @@
 
 typedef struct {
     int tamano;
-    Bucket * buckets;
+    Bucket ** buckets;
 } TablaHash;
 
 TablaHash * crearTablaHash(ListaDePalabras * universo);
