@@ -4,10 +4,11 @@
 TablaHash * crearTablaHash(ListaDePalabras * universo)
 {
     TablaHash * tablaHash = armarTablaHash(universo->cantidad);
+    int elementosPorBucket = universo->cantidad / tablaHash->tamano + 1;
 
     ListaDePalabras * listasDePalabras[tablaHash->tamano];
     for (int i=0; i < tablaHash->tamano; i++) {
-        listasDePalabras[i] = crearListaDePalabras(universo->cantidad / tablaHash->cantidad + 1);
+        listasDePalabras[i] = crearListaDePalabras(elementosPorBucket);
     }
 
     Palabra * palabraActual;
