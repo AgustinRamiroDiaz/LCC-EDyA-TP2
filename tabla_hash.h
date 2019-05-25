@@ -1,3 +1,6 @@
+#ifndef TABLA_HASH
+#define TABLA_HASH
+
 #include "bucket.h"
 
 typedef struct {
@@ -14,3 +17,5 @@ void imprimirTablaHashEnArchivo(TablaHash tablaHash, char * nombreDeArchivo);
 unsigned long hashearPalabra(Palabra palabra);
 
 int calcularCantidadDeBuckets(int cantidadDePalabras);
+
+#endif

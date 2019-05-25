@@ -1,3 +1,6 @@
+#ifndef PALABRA
+#define PALABRA
+
 #include <wchar.h>
 
 typedef struct {
@@ -17,3 +20,5 @@ void agregarPalabraALista(Palabra * palabra, ListaDePalabras * listaDePalabras);
 ListaDePalabras * crearListaDePalabrasDesdeArchivo(FILE * archivo);
 
 Palabra * crearPalabra(wchar_t * letras);
+
+#endif

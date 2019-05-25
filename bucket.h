@@ -1,3 +1,6 @@
+#ifndef BUCKET
+#define BUCKET
+
 #include "palabra.h"
 
 typedef struct {
@@ -19,3 +22,5 @@ int probarLlenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras, unsigne
 void vaciarBucket(Bucket * bucket);
 
 void imprimirBucketEnArchivo(Bucket bucket, FILE * archivo);
+
+#endif

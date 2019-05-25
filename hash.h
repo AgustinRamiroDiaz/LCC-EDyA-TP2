@@ -1,3 +1,6 @@
+#ifndef HASH
+#define HASH
+
 #include "palabra.h"
 
 typedef unsigned long (*FuncionHash) (wchar_t *str);
@@ -12,3 +15,5 @@ hashConConstante(Palabra palabra, unsigned long constante);
 
 unsigned long
 sdbm(wchar_t *str);
+
+#endif
