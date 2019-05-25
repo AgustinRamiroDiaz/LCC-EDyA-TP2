@@ -28,14 +28,14 @@ void crearBuckets(TablaHash * tablaHash, ListaDePalabras ** gruposDePalabras)
     }
 }
 
-ListaDePalabras ** agruparPalabras(TablaHash * tablaHash, ListaDePalabras * palabras)
+ListaDePalabras ** agruparPalabras(TablaHash * tablaHash, ListaDePalabras * listaDePalabras)
 {
-    ListaDePalabras ** gruposDePalabras = crearGruposDePalabras(tablaHash, palabras);
+    ListaDePalabras ** gruposDePalabras = crearGruposDePalabras(tablaHash, listaDePalabras);
     Palabra * palabraActual;
     int palabraHasheada;
 
-    for (int i = 0; i < palabras->cantidad; i++) {
-        palabraActual = palabras->palabras[i];
+    for (int i = 0; i < listaDePalabras->cantidad; i++) {
+        palabraActual = listaDePalabras->palabras[i];
         palabraHasheada = obtenerHashPrincipal(*tablaHash, *palabraActual);
         agregarPalabraALista(palabraActual, gruposDePalabras[palabraHasheada]);
     }
