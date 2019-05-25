@@ -23,7 +23,7 @@ Bucket * armarBucket(int cantidadDePalabras)
 
 int calcularTamanoDeBucket(int cantidadDePalabras)
 {
-    return cantidadDePalabras;
+    return cantidadDePalabras * 2;
 }
 
 void llenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras)
@@ -47,7 +47,7 @@ int probarLlenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras, unsigne
 {
     int palabraHasheada, colisiona = 0;
     Palabra * palabraActual;
-    vaciarBucket(bucket);
+    limpiarBucket(bucket);
 
     for (int i = 0; i < listaDePalabras.cantidad && !colisiona; i++) {
         palabraActual = listaDePalabras.palabras[i];
@@ -63,7 +63,7 @@ int probarLlenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras, unsigne
     return !colisiona;
 }
 
-void vaciarBucket(Bucket * bucket)
+void limpiarBucket(Bucket * bucket)
 {
     for (int i=0; i < bucket->tamano; i++) {
         bucket->tablaHash[i] = NULL;

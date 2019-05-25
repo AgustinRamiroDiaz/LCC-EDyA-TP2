@@ -19,7 +19,7 @@ void llenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras);
 
 int probarLlenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras, unsigned long constanteDeHasheo);
 
-void vaciarBucket(Bucket * bucket);
+void limpiarBucket(Bucket * bucket);
 
 void imprimirBucketEnArchivo(Bucket bucket, FILE * archivo);
 

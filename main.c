@@ -5,7 +5,6 @@
 #include <assert.h>
 #include "tabla_hash.h"
 
-
 int main(int argc, char const *argv[])
 {
     setlocale(LC_CTYPE, "");
