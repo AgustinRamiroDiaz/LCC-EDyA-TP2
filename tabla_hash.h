@@ -5,6 +5,7 @@
 
 typedef struct {
     int tamano;
+    int cantidadDeElementos;
     Bucket ** buckets;
 } TablaHash;
 
@@ -24,4 +25,9 @@ int obtenerHashPrincipal(TablaHash tablaHash, Palabra palabra);
 
 int calcularCantidadDeBuckets(int cantidadDePalabras);
 
+int verificarTablaHash(TablaHash tablaHash, ListaDePalabras universo);
+
+int palabraEnTablaHash(TablaHash tablaHash, Palabra palabra);
+
+TablaHash * cargarTablaHashDesdeArchivo(char * nombreDeArchivo);
 #endif

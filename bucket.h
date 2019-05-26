@@ -25,4 +25,8 @@ int obtenerHashSecundario(Bucket bucket, Palabra palabra);
 
 void imprimirBucketEnArchivo(Bucket bucket, FILE * archivo);
 
+Bucket * cargarBucketDesdeArchivo(FILE * archivo);
+
+void cargarPalabrasEnBucketDesdeArchivo(Bucket * bucket, FILE * archivo);
+
 #endif

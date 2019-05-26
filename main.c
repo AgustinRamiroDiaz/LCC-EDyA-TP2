@@ -1,6 +1,4 @@
-#include <stdlib.h>
 #include <locale.h>
-#include <wchar.h>
 #include <assert.h>
 #include "archivo.h"
 #include "tabla_hash.h"
@@ -11,9 +9,16 @@ int main(int argc, char const *argv[])
 
     FILE * archivo = abrirArchivo("listado-general.txt", "r");
     ListaDePalabras * universo = crearListaDePalabrasDesdeArchivo(archivo);
-    TablaHash * tablaHash = crearTablaHash(universo);
+    TablaHash * tablaHash = crearTablaHash(universo), * tablaHash2;
 
-    imprimirTablaHashEnArchivo(*tablaHash, "tabla-hash.txt");
+    if (verificarTablaHash(*tablaHash, *universo)) {
+        imprimirTablaHashEnArchivo(*tablaHash, "tabla-hash.txt");
+    } else {
+        printf("No se pudo hashear el universo\n");
+    }
+
+    tablaHash2 = cargarTablaHashDesdeArchivo("tabla-hash.txt");
+    imprimirTablaHashEnArchivo(*tablaHash2, "tabla-hash2.txt");
 
     return 0;
 }

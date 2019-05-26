@@ -23,4 +23,20 @@ void agrandarListaDePalabras(ListaDePalabras * listaDePalabras);
 
 Palabra * crearPalabra(wchar_t * letras);
 
+int sonPalabrasIguales(Palabra primeraPalabra, Palabra segundaPalabra);
+
+int sonPalabrasDistintas(Palabra primeraPalabra, Palabra segundaPalabra);
+
+void intercambiarLetras(Palabra * palabra, int primeraPosicion, int segundaPosicion);
+
+void intercambiarLetrasAdyacentes(Palabra * palabra, int posicion);
+
+wchar_t reemplazarLetra(Palabra * palabra, wchar_t letra, int posicion);
+
+void agregarLetra(Palabra * palabra, wchar_t letra, int posicion);
+
+wchar_t eliminarLetra(Palabra * palabra, int posicion);
+
+Palabra * cargarPalabraDesdeArchivo(FILE * archivo);
+
 #endif

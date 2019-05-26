@@ -4,11 +4,11 @@
 
 ListaDePalabras * crearListaDePalabrasDesdeArchivo(FILE * archivo)
 {
+    Palabra * palabra;
     ListaDePalabras * listaDePalabras = crearListaDePalabras(TAMANO_INICIAL_LISTA);
-    wchar_t buffer[LARGO_MAXIMO_PALABRA];
-
-    while(fwscanf(archivo, L"%ls", buffer) == 1) {
-        agregarPalabraALista(crearPalabra(buffer), listaDePalabras);
+    
+    while(palabra = cargarPalabraDesdeArchivo(archivo)) {
+        agregarPalabraALista(palabra, listaDePalabras);
     }
 
     return listaDePalabras;
@@ -51,4 +51,69 @@ Palabra * crearPalabra(wchar_t * letras)
     wcscpy(palabra->letras, letras);
 
     return palabra;
+}
+
+int sonPalabrasIguales(Palabra primeraPalabra, Palabra segundaPalabra)
+{
+    if (primeraPalabra.longitud != segundaPalabra.longitud) {
+        return 0;
+    }
+
+    return 0 == wcscmp(primeraPalabra.letras, segundaPalabra.letras);
+}
+
+int sonPalabrasDistintas(Palabra primeraPalabra, Palabra segundaPalabra)
+{
+    return !sonPalabrasIguales(primeraPalabra, segundaPalabra);
+}
+
+void intercambiarLetras(Palabra * palabra, int primeraPosicion, int segundaPosicion)
+{
+    wchar_t primeraLetra = palabra->letras[primeraPosicion];
+    wchar_t segundaLetra = reemplazarLetra(palabra, primeraLetra, segundaPosicion);
+    reemplazarLetra(palabra, segundaLetra, primeraPosicion);
+}
+
+wchar_t reemplazarLetra(Palabra * palabra, wchar_t letra, int posicion)
+{
+    wchar_t eliminada = palabra->letras[posicion];
+    palabra->letras[posicion] = letra;
+
+    return eliminada;
+}
+
+void agregarLetra(Palabra * palabra, wchar_t letra, int posicion)
+{
+    palabra->longitud++;
+    palabra->letras = realloc(palabra, sizeof(wchar_t) * (palabra->longitud + 1));
+
+    for (int i = palabra->longitud; i > posicion; i--) {
+        palabra->letras[i] = palabra->letras[i-1];
+    }
+    palabra->letras[posicion] = letra;
+}
+
+wchar_t eliminarLetra(Palabra * palabra, int posicion)
+{
+    wchar_t eliminada = palabra->letras[posicion];
+
+    for (int i = posicion; i < palabra->longitud; i++) {
+        palabra->letras[i] = palabra->letras[i+1];
+    }
+    palabra->longitud--;
+    palabra->letras = realloc(palabra, sizeof(wchar_t) * (palabra->longitud + 1));
+
+    return eliminada;
+}
+
+Palabra * cargarPalabraDesdeArchivo(FILE * archivo)
+{
+    wchar_t buffer[LARGO_MAXIMO_PALABRA];
+
+    if (1 == fwscanf(archivo, L" %ls\n", buffer)){
+        return crearPalabra(buffer);
+    }
+
+    printf("null\n");
+    return NULL;
 }

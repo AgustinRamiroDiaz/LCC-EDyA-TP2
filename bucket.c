@@ -2,6 +2,7 @@
 #include <assert.h>
 #include "bucket.h"
 #include "hash.h"
+#include "constantes.h"
 
 Bucket * crearBucket(ListaDePalabras listaDePalabras)
 {
@@ -15,7 +16,7 @@ Bucket * armarBucket(int cantidadDePalabras)
 {
     Bucket * bucket = malloc(sizeof(Bucket));
     bucket->tamano = calcularTamanoDeBucket(cantidadDePalabras);
-    bucket->tablaHash = malloc(sizeof(Palabra) * bucket->tamano);
+    bucket->tablaHash = malloc(sizeof(Palabra*) * bucket->tamano);
     bucket->capacidad = cantidadDePalabras;
 
     return bucket;
@@ -23,7 +24,7 @@ Bucket * armarBucket(int cantidadDePalabras)
 
 int calcularTamanoDeBucket(int cantidadDePalabras)
 {
-    return cantidadDePalabras * 2;
+    return cantidadDePalabras * FACTOR_TAMANO_BUCKET;
 }
 
 void llenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras)
@@ -45,7 +46,7 @@ void llenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras)
 int probarLlenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras, unsigned long constanteDeHasheo)
 {
     int palabraHasheada, colisiona = 0;
-    Palabra * palabraActual;
+    Palabra * palabraActual, * palabraEncontrada;
 
     limpiarBucket(bucket);
     bucket->constanteDeHasheo = constanteDeHasheo;
@@ -53,10 +54,11 @@ int probarLlenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras, unsigne
     for (int i = 0; i < listaDePalabras.cantidad && !colisiona; i++) {
         palabraActual = listaDePalabras.palabras[i];
         palabraHasheada = obtenerHashSecundario(*bucket, *palabraActual);
+        palabraEncontrada = bucket->tablaHash[palabraHasheada];
 
-        if (NULL == bucket->tablaHash[palabraHasheada]) {
+        if (NULL == palabraEncontrada) {
             bucket->tablaHash[palabraHasheada] = palabraActual;
-        } else {
+        } else if (sonPalabrasDistintas(*palabraActual, *palabraEncontrada)) {
             colisiona = 1;
         }
     }
@@ -73,7 +75,7 @@ void limpiarBucket(Bucket * bucket)
 
 void imprimirBucketEnArchivo(Bucket bucket, FILE * archivo)
 {
-    fwprintf(archivo, L"%d %d\n", bucket.constanteDeHasheo, bucket.capacidad);
+    fwprintf(archivo, L"%ld %d\n", bucket.constanteDeHasheo, bucket.capacidad);
 
     Palabra * palabraActual;
     for (int i = 0; i < bucket.tamano; i++) {
@@ -87,5 +89,28 @@ void imprimirBucketEnArchivo(Bucket bucket, FILE * archivo)
 
 int obtenerHashSecundario(Bucket bucket, Palabra palabra)
 {
-    return hashConConstante(palabra, bucket.constanteDeHasheo) % bucket.tamano;
+    return funcionHashSecundaria(palabra, bucket.constanteDeHasheo) % bucket.tamano;
+}
+
+Bucket * cargarBucketDesdeArchivo(FILE * archivo)
+{
+    unsigned long constanteDeHasheo;
+    int cantidadDeElementos;
+
+    fscanf(archivo, "%ld %d", &constanteDeHasheo, &cantidadDeElementos);
+    Bucket * bucket = armarBucket(cantidadDeElementos);
+    bucket->constanteDeHasheo = constanteDeHasheo;
+    cargarPalabrasEnBucketDesdeArchivo(bucket, archivo);
+
+    return bucket;
+}
+
+void cargarPalabrasEnBucketDesdeArchivo(Bucket * bucket, FILE * archivo)
+{
+    int posicionEnBucket;
+
+    for (int i = 0; i < bucket->capacidad; i++) {
+        fwscanf(archivo, L"%d", &posicionEnBucket);
+        bucket->tablaHash[posicionEnBucket] = cargarPalabraDesdeArchivo(archivo);
+    }
 }

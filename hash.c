@@ -2,6 +2,12 @@
 #include "hash.h"
 #include "constantes.h"
 
+
+unsigned long funcionHashPrincipal(Palabra palabra)
+{
+  return djb2(palabra);
+}
+
 unsigned long djb2(Palabra palabra)
 {
   unsigned long hash = CONSTANTE_HASHEO;
@@ -14,7 +20,7 @@ unsigned long djb2(Palabra palabra)
   return hash;
 }
 
-unsigned long hashConConstante(Palabra palabra, unsigned long constante)
+unsigned long funcionHashSecundaria(Palabra palabra, unsigned long constante)
 {
   unsigned long hash = constante;
 
@@ -22,17 +28,6 @@ unsigned long hashConConstante(Palabra palabra, unsigned long constante)
   for (int i=0; letra = palabra.letras[i]; i++) {
       hash = (hash ^ letra) + ((hash << 26) + (hash >> 6));
   }
-
-  return hash;
-}
-
-unsigned long sdbm(wchar_t *str)
-{
-  unsigned long hash = 0;
-  int c;
-
-  while (c = *str++)
-      hash = c + (hash << 6) + (hash << 16) - hash;
 
   return hash;
 }

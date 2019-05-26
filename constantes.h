@@ -1,10 +1,11 @@
 #ifndef CONSTANTES
 #define CONSTANTES
 
-static int CONSTANTE_HASHEO = 5381;
-static float POTENCIA_TAMANO_BUCKETS = 22.0/30.0;
+static const int CONSTANTE_HASHEO = 5381;
+static const int FACTOR_TAMANO_BUCKET = 1;
+static const float ELEMENTOS_POR_BUCKET = 4;
 
-static int TAMANO_INICIAL_LISTA = 1024;
-static int LARGO_MAXIMO_PALABRA = 500;
+static const int TAMANO_INICIAL_LISTA = 1024;
+static const int LARGO_MAXIMO_PALABRA = 500;
 
 #endif
