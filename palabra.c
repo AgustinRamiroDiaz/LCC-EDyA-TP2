@@ -6,7 +6,7 @@ ListaDePalabras * crearListaDePalabrasDesdeArchivo(FILE * archivo)
 {
     Palabra * palabra;
     ListaDePalabras * listaDePalabras = crearListaDePalabras(TAMANO_INICIAL_LISTA);
-    
+
     while(palabra = cargarPalabraDesdeArchivo(archivo)) {
         agregarPalabraALista(palabra, listaDePalabras);
     }
@@ -110,10 +110,9 @@ Palabra * cargarPalabraDesdeArchivo(FILE * archivo)
 {
     wchar_t buffer[LARGO_MAXIMO_PALABRA];
 
-    if (1 == fwscanf(archivo, L" %ls\n", buffer)){
+    if (1 == fwscanf(archivo, L" %ls ", buffer)){
         return crearPalabra(buffer);
     }
 
-    printf("null\n");
     return NULL;
 }

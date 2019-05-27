@@ -97,7 +97,7 @@ Bucket * cargarBucketDesdeArchivo(FILE * archivo)
     unsigned long constanteDeHasheo;
     int cantidadDeElementos;
 
-    fscanf(archivo, "%ld %d", &constanteDeHasheo, &cantidadDeElementos);
+    fwscanf(archivo, L"%ld %d", &constanteDeHasheo, &cantidadDeElementos);
     Bucket * bucket = armarBucket(cantidadDeElementos);
     bucket->constanteDeHasheo = constanteDeHasheo;
     cargarPalabrasEnBucketDesdeArchivo(bucket, archivo);

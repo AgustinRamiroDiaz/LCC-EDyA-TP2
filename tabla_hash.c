@@ -5,6 +5,8 @@
 #include "archivo.h"
 #include "constantes.h"
 
+#include <assert.h>
+
 TablaHash * crearTablaHash(ListaDePalabras * universo)
 {
     TablaHash * tablaHash = armarTablaHash(universo->cantidad);
@@ -29,7 +31,6 @@ void crearBuckets(TablaHash * tablaHash, ListaDePalabras ** gruposDePalabras)
 {
     for (int i=0; i < tablaHash->tamano; i++) {
         tablaHash->buckets[i] = crearBucket(*gruposDePalabras[i]);
-        //printf("%d: %ld\n", i, tablaHash->buckets[i]->constanteDeHasheo);
     }
 }
 
@@ -111,15 +112,11 @@ TablaHash * cargarTablaHashDesdeArchivo(char * nombreDeArchivo)
     int cantidadDeElementos, cantidadDeBuckets;
 
     FILE * archivo = abrirArchivo(nombreDeArchivo, "r");
-    fscanf(archivo, "%d %d", &cantidadDeElementos ,&cantidadDeBuckets);
+    fwscanf(archivo, L"%d %d", &cantidadDeElementos ,&cantidadDeBuckets);
     TablaHash * tablaHash = armarTablaHash(cantidadDeElementos);
-    
+
     for (int i = 0; i < tablaHash->tamano; i++) {
         tablaHash->buckets[i] = cargarBucketDesdeArchivo(archivo);
-        if (i==1) {
-            printf("%ld %d\n", tablaHash->buckets[i]->constanteDeHasheo, tablaHash->buckets[i]->capacidad);
-        }
-
     }
 
     cerrarArchivo(archivo);
