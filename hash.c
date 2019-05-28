@@ -26,8 +26,19 @@ unsigned long funcionHashSecundaria(Palabra palabra, unsigned long constante)
 
   int letra;
   for (int i=0; letra = palabra.letras[i]; i++) {
-      hash = (hash ^ letra) + ((hash << 26) + (hash >> 6));
+      hash = ((hash << 5) + hash) + letra;
   }
 
   return hash;
+}
+
+unsigned long sdbm(Palabra palabra)
+{
+   unsigned long hash = 0;
+   int c;
+
+   while (c = *(palabra.letras)++)
+       hash = c + (hash << 6) + (hash << 16) - hash;
+
+   return hash;
 }

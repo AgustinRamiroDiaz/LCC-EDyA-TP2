@@ -1,2 +1,1 @@
 gcc main.c bucket.c hash.c palabra.c tabla_hash.c archivo.c -o main -lm
-

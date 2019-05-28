@@ -5,7 +5,7 @@
 ListaDePalabras * crearListaDePalabrasDesdeArchivo(FILE * archivo)
 {
     Palabra * palabra;
-    ListaDePalabras * listaDePalabras = crearListaDePalabras(TAMANO_INICIAL_LISTA);
+    ListaDePalabras * listaDePalabras = armarListaDePalabras(TAMANO_INICIAL_LISTA);
 
     while(palabra = cargarPalabraDesdeArchivo(archivo)) {
         agregarPalabraALista(palabra, listaDePalabras);
@@ -14,7 +14,7 @@ ListaDePalabras * crearListaDePalabrasDesdeArchivo(FILE * archivo)
     return listaDePalabras;
 }
 
-ListaDePalabras * crearListaDePalabras(int cantidadDePalabras)
+ListaDePalabras * armarListaDePalabras(int cantidadDePalabras)
 {
     ListaDePalabras * listaDePalabras = malloc(sizeof(ListaDePalabras));
     listaDePalabras->palabras = malloc(sizeof(Palabra) * cantidadDePalabras);
@@ -115,4 +115,29 @@ Palabra * cargarPalabraDesdeArchivo(FILE * archivo)
     }
 
     return NULL;
+}
+
+Palabra * copiarPalabra(Palabra palabra)
+{
+    return crearPalabra(palabra.letras);
+}
+
+void liberarPalabra(Palabra * palabra)
+{
+    free(palabra->letras);
+    free(palabra);
+}
+
+ListaDePalabras * separarPalabra(Palabra palabra, int posicion)
+{
+    ListaDePalabras * listaDePalabras = armarListaDePalabras(2);
+    wchar_t buffer[LARGO_MAXIMO_PALABRA];
+
+    wcsncpy(buffer, palabra.letras, posicion);
+    agregarPalabraALista(crearPalabra(buffer), listaDePalabras);
+
+    wcsncpy(buffer, palabra.letras + posicion, palabra.longitud - posicion);
+    agregarPalabraALista(crearPalabra(buffer), listaDePalabras);
+
+    return listaDePalabras;
 }

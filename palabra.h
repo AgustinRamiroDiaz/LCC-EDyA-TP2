@@ -15,7 +15,7 @@ typedef struct {
 
 ListaDePalabras * crearListaDePalabrasDesdeArchivo(FILE * archivo);
 
-ListaDePalabras * crearListaDePalabras(int cantidadDePalabras);
+ListaDePalabras * armarListaDePalabras(int cantidadDePalabras);
 
 void agregarPalabraALista(Palabra * palabra, ListaDePalabras * listaDePalabras);
 
@@ -38,5 +38,12 @@ void agregarLetra(Palabra * palabra, wchar_t letra, int posicion);
 wchar_t eliminarLetra(Palabra * palabra, int posicion);
 
 Palabra * cargarPalabraDesdeArchivo(FILE * archivo);
+
+Palabra * copiarPalabra(Palabra palabra);
+
+void liberarPalabra(Palabra * palabra);
+
+ListaDePalabras * separarPalabra(Palabra palabra, int posicion)
+
 
 #endif

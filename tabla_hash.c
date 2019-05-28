@@ -55,7 +55,7 @@ ListaDePalabras ** crearGruposDePalabras(TablaHash * tablaHash, ListaDePalabras 
     ListaDePalabras ** gruposDePalabras = malloc(sizeof(ListaDePalabras*) * tablaHash->tamano);
 
     for (int i=0; i < tablaHash->tamano; i++) {
-        gruposDePalabras[i] = crearListaDePalabras(elementosPorBucket);
+        gruposDePalabras[i] = armarListaDePalabras(elementosPorBucket);
     }
 
     return gruposDePalabras;
@@ -122,4 +122,58 @@ TablaHash * cargarTablaHashDesdeArchivo(char * nombreDeArchivo)
     cerrarArchivo(archivo);
 
     return tablaHash;
+}
+
+ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash)
+{
+    ListaDePalabras * listaDeSugerencias = armarListaDePalabras(TAMANO_INICIAL_LISTA_SUGERENCIAS);
+
+    Palabra * palabraCopiada;
+
+    for (size_t i = 0;i < palabra.longitud - 1; i++) {
+        palabraCopiada = copiarPalabra(palabra);
+        intercambiarLetras(palabraCopiada, i, i + 1);
+        sugerirOLiberar(tablaHash, palabraCopiada, listaDeSugerencias);
+    }
+
+    for (size_t caracter = 65; i < 91; i++) {
+        for (size_t i = 1; i < palabra.longitud; i++) {
+            palabraCopiada = copiarPalabra(palabra);
+            agregarLetra(palabraCopiada, caracter, i);
+            sugerirOLiberar(tablaHash, palabraCopiada, listaDeSugerencias);
+        }
+        for (size_t i = 0; i < palabra.longitud; i++) {
+            palabraCopiada = copiarPalabra(palabra);
+            reemplazarLetra(palabraCopiada, caracter, i);
+            sugerirOLiberar(tablaHash, palabraCopiada, listaDeSugerencias);
+        }
+    }
+
+    for (size_t i = 0; i < palabra.longitud; i++) {
+        palabraCopiada = copiarPalabra(palabra);
+        eliminarLetra(palabraCopiada, i);
+        sugerirOLiberar(tablaHash, palabraCopiada, listaDeSugerencias);
+    }
+
+    listaDePalabras * dobleSugerencia;
+    for (size_t i = 1; i < palabra.longitud; i++) {
+        palabraCopiada = copiarPalabra(palabra);
+        dobleSugerencia = separarPalabra(palabraCopiada, i);
+        if(palabraEnTablaHash(dobleSugerencia->palabras[0], tablaHash)
+         &&palabraEnTablaHash(dobleSugerencia->palabras[1], tablaHash)){
+             palabraCopiada = crearPalabra(wcscat(dobleSugerencia->palabras[0], dobleSugerencia->palabras[1]));
+             agregarPalabraALista(palabra, listaDeSugerencias);
+         } else {
+             liberarPalabra(palabraCopiada);
+         }
+    }
+}
+
+void sugerirOLiberar(TablaHash tablaHash, Palabra * palabra, listaDeSugerencias * listaDeSugerencias)
+{
+    if (palabraEnTablaHash(tablaHash, palabra)){
+        agregarPalabraALista(palabra, listaDeSugerencias);
+    } else {
+        liberarPalabra(palabra);
+    }
 }

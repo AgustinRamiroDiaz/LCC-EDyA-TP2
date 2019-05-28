@@ -32,7 +32,7 @@ void llenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras)
     int esValida = 0;
     unsigned long constanteDeHasheo;
 
-    for (constanteDeHasheo = 1; constanteDeHasheo && !esValida; constanteDeHasheo++) {
+    for (constanteDeHasheo = 1; constanteDeHasheo && !esValida; constanteDeHasheo += 1) {
         esValida = probarLlenarBucket(bucket, listaDePalabras, constanteDeHasheo);
 
         if (esValida) {
