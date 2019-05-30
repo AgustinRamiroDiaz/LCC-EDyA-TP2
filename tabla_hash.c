@@ -130,39 +130,39 @@ ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash)
 
     Palabra * palabraCopiada;
 
-    for (size_t i = 0;i < palabra.longitud - 1; i++) {
+    for (int i = 0;i < palabra.longitud - 1; i++) {
         palabraCopiada = copiarPalabra(palabra);
         intercambiarLetras(palabraCopiada, i, i + 1);
         sugerirOLiberar(tablaHash, palabraCopiada, listaDeSugerencias);
     }
 
-    for (size_t caracter = 65; i < 91; i++) {
-        for (size_t i = 1; i < palabra.longitud; i++) {
+    for (int caracter = 65; caracter < 91; caracter++) {
+        for (int i = 1; i < palabra.longitud; i++) {
             palabraCopiada = copiarPalabra(palabra);
             agregarLetra(palabraCopiada, caracter, i);
             sugerirOLiberar(tablaHash, palabraCopiada, listaDeSugerencias);
         }
-        for (size_t i = 0; i < palabra.longitud; i++) {
+        for (int i = 0; i < palabra.longitud; i++) {
             palabraCopiada = copiarPalabra(palabra);
             reemplazarLetra(palabraCopiada, caracter, i);
             sugerirOLiberar(tablaHash, palabraCopiada, listaDeSugerencias);
         }
     }
 
-    for (size_t i = 0; i < palabra.longitud; i++) {
+    for (int i = 0; i < palabra.longitud; i++) {
         palabraCopiada = copiarPalabra(palabra);
         eliminarLetra(palabraCopiada, i);
         sugerirOLiberar(tablaHash, palabraCopiada, listaDeSugerencias);
     }
 
     ListaDePalabras * dobleSugerencia;
-    for (size_t i = 1; i < palabra.longitud; i++) {
+    for (int i = 1; i < palabra.longitud; i++) {
         palabraCopiada = copiarPalabra(palabra);
         dobleSugerencia = separarPalabra(*palabraCopiada, i);
         if(palabraEnTablaHash(tablaHash, *dobleSugerencia->palabras[0])
          &&palabraEnTablaHash(tablaHash, *dobleSugerencia->palabras[1])){
-             palabraCopiada = crearPalabra(wcscat(dobleSugerencia->palabras[0], dobleSugerencia->palabras[1]));
-             agregarPalabraALista(palabra, listaDeSugerencias);
+             palabraCopiada = crearPalabra(wcscat(dobleSugerencia->palabras[0]->letras, dobleSugerencia->palabras[1]->letras));
+             agregarPalabraALista(palabraCopiada, listaDeSugerencias);
          } else {
              liberarPalabra(palabraCopiada);
          }
