@@ -164,7 +164,7 @@ ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash)
             palabraCopiada = crearPalabra(wcscat(dobleSugerencia->palabras[0]->letras, dobleSugerencia->palabras[1]->letras));
             agregarPalabraALista(palabraCopiada, listaDeSugerencias);
         } else {
-             iberarPalabra(palabraCopiada);
+            liberarPalabra(palabraCopiada);
         }
     }
 }
