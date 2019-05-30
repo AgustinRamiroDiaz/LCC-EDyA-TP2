@@ -155,12 +155,12 @@ ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash)
         sugerirOLiberar(tablaHash, palabraCopiada, listaDeSugerencias);
     }
 
-    listaDePalabras * dobleSugerencia;
+    ListaDePalabras * dobleSugerencia;
     for (size_t i = 1; i < palabra.longitud; i++) {
         palabraCopiada = copiarPalabra(palabra);
-        dobleSugerencia = separarPalabra(palabraCopiada, i);
-        if(palabraEnTablaHash(dobleSugerencia->palabras[0], tablaHash)
-         &&palabraEnTablaHash(dobleSugerencia->palabras[1], tablaHash)){
+        dobleSugerencia = separarPalabra(*palabraCopiada, i);
+        if(palabraEnTablaHash(tablaHash, *dobleSugerencia->palabras[0])
+         &&palabraEnTablaHash(tablaHash, *dobleSugerencia->palabras[1])){
              palabraCopiada = crearPalabra(wcscat(dobleSugerencia->palabras[0], dobleSugerencia->palabras[1]));
              agregarPalabraALista(palabra, listaDeSugerencias);
          } else {
@@ -169,9 +169,9 @@ ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash)
     }
 }
 
-void sugerirOLiberar(TablaHash tablaHash, Palabra * palabra, listaDeSugerencias * listaDeSugerencias)
+void sugerirOLiberar(TablaHash tablaHash, Palabra * palabra, ListaDePalabras * listaDeSugerencias)
 {
-    if (palabraEnTablaHash(tablaHash, palabra)){
+    if (palabraEnTablaHash(tablaHash, *palabra)){
         agregarPalabraALista(palabra, listaDeSugerencias);
     } else {
         liberarPalabra(palabra);

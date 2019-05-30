@@ -43,7 +43,6 @@ Palabra * copiarPalabra(Palabra palabra);
 
 void liberarPalabra(Palabra * palabra);
 
-ListaDePalabras * separarPalabra(Palabra palabra, int posicion)
-
+ListaDePalabras * separarPalabra(Palabra palabra, int posicion);
 
 #endif

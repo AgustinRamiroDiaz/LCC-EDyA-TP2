@@ -33,6 +33,6 @@ TablaHash * cargarTablaHashDesdeArchivo(char * nombreDeArchivo);
 
 ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash);
 
-void sugerirOLiberar(TablaHash tablaHash, Palabra * palabra, listaDeSugerencias * listaDeSugerencias);
+void sugerirOLiberar(TablaHash tablaHash, Palabra * palabra, ListaDePalabras * listaDeSugerencias);
 
 #endif
