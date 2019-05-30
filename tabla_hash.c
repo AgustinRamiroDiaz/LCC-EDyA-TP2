@@ -141,11 +141,9 @@ ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash)
 
 
     for (wchar_t caracter = L'a'; caracter <= L'z'; caracter++) {
-        wprintf(L"Ale was here\n");
         for (int i = 1; i < palabra.longitud; i++) {
             palabraCopiada = copiarPalabra(palabra);
             agregarLetra(palabraCopiada, caracter, i);
-            wprintf(L"palabra copiada: %ls\n", palabraCopiada->letras);
             sugerirOLiberar(tablaHash, palabraCopiada, listaDeSugerencias);
         }
         for (int i = 0; i < palabra.longitud; i++) {
@@ -193,30 +191,29 @@ void corregirArchivo(FILE * archivo, TablaHash tablaHash)
     Palabra * palabraActual;
     int contadorDeLineas = 1;
     for (size_t i = 0; caracter != WEOF; i++) {
-        wprintf(L"%lc\n", caracter);
         buffer[i] = caracter;
         if (caracter == L':' || caracter == L';' || caracter == L',' || caracter == L'.' || caracter == L'?' || caracter == L'!') {
             buffer[i] = L'\0';
             palabraActual = crearPalabra(buffer);
+            if (!palabraEnTablaHash(tablaHash, *palabraActual))
             imprimirSugerencias(*palabraActual, contadorDeLineas, *generarSugerencias(*palabraActual, tablaHash));
             fgetwc(archivo);
-            i = 0;
+            i = -1;
         }
         if (caracter == L' ') {
-            wprintf(L"Termina la palabra\n");
             buffer[i] = L'\0';
             palabraActual = crearPalabra(buffer);
+            if (!palabraEnTablaHash(tablaHash, *palabraActual))
             imprimirSugerencias(*palabraActual, contadorDeLineas, *generarSugerencias(*palabraActual, tablaHash));
-            i = 0;
-
-            wprintf(L"salio?\n");
+            i = -1;
         }
         if (caracter == L'\n' || caracter == L'\r') {
             buffer[i] = L'\0';
             palabraActual = crearPalabra(buffer);
+            if (!palabraEnTablaHash(tablaHash, *palabraActual))
             imprimirSugerencias(*palabraActual, contadorDeLineas, *generarSugerencias(*palabraActual, tablaHash));
             contadorDeLineas++;
-            i = 0;
+            i = -1;
         }
 
         caracter = fgetwc(archivo);
@@ -228,7 +225,7 @@ void imprimirSugerencias(Palabra palabra, int linea, ListaDePalabras listaDeSuge
     wprintf(L"Linea %d, \"%ls\" no esta en el diccionario.\n", linea, palabra.letras);
     wprintf(L"Quizas quiso decir: ");
     for (size_t i = 0; i < listaDeSugerencias.cantidad; i++) {
-        wprintf(L"%ls ", listaDeSugerencias.palabras[i]);
+        wprintf(L"%ls ", listaDeSugerencias.palabras[i]->letras);
     }
-    wprintf(L"\n");
+    wprintf(L"\n\n");
 }
