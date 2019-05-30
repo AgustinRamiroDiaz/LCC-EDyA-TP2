@@ -101,6 +101,8 @@ int palabraEnTablaHash(TablaHash tablaHash, Palabra palabra)
     int numeroDeBucket = obtenerHashPrincipal(tablaHash, palabra);
     Bucket * bucket = tablaHash.buckets[numeroDeBucket];
 
+    if(bucket->capacidad == 0) return 0;
+
     int posicionEnBucket = obtenerHashSecundario(*bucket, palabra);
     Palabra * palabraEncontrada = bucket->tablaHash[posicionEnBucket];
 
@@ -138,11 +140,11 @@ ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash)
     }
 
 
-    for (int caracter = L'a'; caracter <= L'z'; caracter++) {
-        //wprintf(L"Ale was here\n");
+    for (wchar_t caracter = L'a'; caracter <= L'z'; caracter++) {
+        wprintf(L"Ale was here\n");
         for (int i = 1; i < palabra.longitud; i++) {
             palabraCopiada = copiarPalabra(palabra);
-            agregarLetra(palabraCopiada, L'x', 2);
+            agregarLetra(palabraCopiada, caracter, i);
             wprintf(L"palabra copiada: %ls\n", palabraCopiada->letras);
             sugerirOLiberar(tablaHash, palabraCopiada, listaDeSugerencias);
         }
@@ -194,7 +196,7 @@ void corregirArchivo(FILE * archivo, TablaHash tablaHash)
         wprintf(L"%lc\n", caracter);
         buffer[i] = caracter;
         if (caracter == L':' || caracter == L';' || caracter == L',' || caracter == L'.' || caracter == L'?' || caracter == L'!') {
-            buffer[i + 1] = L'\0';
+            buffer[i] = L'\0';
             palabraActual = crearPalabra(buffer);
             imprimirSugerencias(*palabraActual, contadorDeLineas, *generarSugerencias(*palabraActual, tablaHash));
             fgetwc(archivo);
@@ -202,7 +204,7 @@ void corregirArchivo(FILE * archivo, TablaHash tablaHash)
         }
         if (caracter == L' ') {
             wprintf(L"Termina la palabra\n");
-            buffer[i + 1] = L'\0';
+            buffer[i] = L'\0';
             palabraActual = crearPalabra(buffer);
             imprimirSugerencias(*palabraActual, contadorDeLineas, *generarSugerencias(*palabraActual, tablaHash));
             i = 0;
@@ -210,7 +212,7 @@ void corregirArchivo(FILE * archivo, TablaHash tablaHash)
             wprintf(L"salio?\n");
         }
         if (caracter == L'\n' || caracter == L'\r') {
-            buffer[i + 1] = L'\0';
+            buffer[i] = L'\0';
             palabraActual = crearPalabra(buffer);
             imprimirSugerencias(*palabraActual, contadorDeLineas, *generarSugerencias(*palabraActual, tablaHash));
             contadorDeLineas++;

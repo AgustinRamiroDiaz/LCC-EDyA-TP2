@@ -85,13 +85,13 @@ wchar_t reemplazarLetra(Palabra * palabra, wchar_t letra, int posicion)
 void agregarLetra(Palabra * palabra, wchar_t letra, int posicion)
 {
     palabra->longitud++;
-    palabra->letras = realloc(palabra, sizeof(wchar_t) * (palabra->longitud + 1));
+    palabra->letras = realloc(palabra->letras, sizeof(wchar_t) * (palabra->longitud + 1));
 
     for (int i = palabra->longitud; i > posicion; i--) {
         palabra->letras[i] = palabra->letras[i-1];
     }
     palabra->letras[posicion] = letra;
-    
+
 }
 
 wchar_t eliminarLetra(Palabra * palabra, int posicion)
