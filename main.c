@@ -11,8 +11,6 @@ int main(int argc, char const *argv[])
     FILE * archivo = abrirArchivo(archivoDeEntrada, "r");
     ListaDePalabras * universo = crearListaDePalabrasDesdeArchivo(archivo);
 
-printf("hola\n");
-
     TablaHash * tablaHash = crearTablaHash(universo), * tablaHash2;
 
 
@@ -23,13 +21,12 @@ printf("hola\n");
         printf("No se pudo hashear el universo\n");
     }
 
-    printf("Intentaremos generar el archivo: %s\n", tablaHashGenerada2);
-
     tablaHash2 = cargarTablaHashDesdeArchivo(tablaHashGenerada);
 
-    printf("Generamos el archivo: %s\n", tablaHashGenerada2);
+    wprintf(L"Comienzan las sugerencias\n");
 
-    imprimirTablaHashEnArchivo(*tablaHash2, "tabla-hash2.txt");
+    FILE * archivoTest = abrirArchivo("Test.txt", "r");
+    corregirArchivo(archivoTest, *tablaHash2);
 
     printf("Fin del main\n");
 

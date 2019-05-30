@@ -130,16 +130,20 @@ ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash)
 
     Palabra * palabraCopiada;
 
+
     for (int i = 0;i < palabra.longitud - 1; i++) {
         palabraCopiada = copiarPalabra(palabra);
         intercambiarLetras(palabraCopiada, i, i + 1);
         sugerirOLiberar(tablaHash, palabraCopiada, listaDeSugerencias);
     }
 
-    for (int caracter = 65; caracter < 91; caracter++) {
+
+    for (int caracter = L'a'; caracter <= L'z'; caracter++) {
+        //wprintf(L"Ale was here\n");
         for (int i = 1; i < palabra.longitud; i++) {
             palabraCopiada = copiarPalabra(palabra);
-            agregarLetra(palabraCopiada, caracter, i);
+            agregarLetra(palabraCopiada, L'x', 2);
+            wprintf(L"palabra copiada: %ls\n", palabraCopiada->letras);
             sugerirOLiberar(tablaHash, palabraCopiada, listaDeSugerencias);
         }
         for (int i = 0; i < palabra.longitud; i++) {
@@ -187,6 +191,7 @@ void corregirArchivo(FILE * archivo, TablaHash tablaHash)
     Palabra * palabraActual;
     int contadorDeLineas = 1;
     for (size_t i = 0; caracter != WEOF; i++) {
+        wprintf(L"%lc\n", caracter);
         buffer[i] = caracter;
         if (caracter == L':' || caracter == L';' || caracter == L',' || caracter == L'.' || caracter == L'?' || caracter == L'!') {
             buffer[i + 1] = L'\0';
@@ -196,10 +201,13 @@ void corregirArchivo(FILE * archivo, TablaHash tablaHash)
             i = 0;
         }
         if (caracter == L' ') {
+            wprintf(L"Termina la palabra\n");
             buffer[i + 1] = L'\0';
             palabraActual = crearPalabra(buffer);
             imprimirSugerencias(*palabraActual, contadorDeLineas, *generarSugerencias(*palabraActual, tablaHash));
             i = 0;
+
+            wprintf(L"salio?\n");
         }
         if (caracter == L'\n' || caracter == L'\r') {
             buffer[i + 1] = L'\0';

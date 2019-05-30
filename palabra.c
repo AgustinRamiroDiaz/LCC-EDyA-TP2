@@ -91,6 +91,7 @@ void agregarLetra(Palabra * palabra, wchar_t letra, int posicion)
         palabra->letras[i] = palabra->letras[i-1];
     }
     palabra->letras[posicion] = letra;
+    
 }
 
 wchar_t eliminarLetra(Palabra * palabra, int posicion)
