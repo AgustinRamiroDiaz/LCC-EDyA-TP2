@@ -35,4 +35,9 @@ ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash);
 
 void sugerirOLiberar(TablaHash tablaHash, Palabra * palabra, ListaDePalabras * listaDeSugerencias);
 
+void corregirArchivo(FILE * archivo, TablaHash tablaHash);
+
+void imprimirSugerencias(Palabra palabra, int linea, ListaDePalabras listaDeSugerencias);
+
+
 #endif

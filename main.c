@@ -10,7 +10,11 @@ int main(int argc, char const *argv[])
 
     FILE * archivo = abrirArchivo(archivoDeEntrada, "r");
     ListaDePalabras * universo = crearListaDePalabrasDesdeArchivo(archivo);
+
+printf("hola\n");
+
     TablaHash * tablaHash = crearTablaHash(universo), * tablaHash2;
+
 
     if (verificarTablaHash(*tablaHash, *universo)) {
         imprimirTablaHashEnArchivo(*tablaHash, tablaHashGenerada);
@@ -20,7 +24,7 @@ int main(int argc, char const *argv[])
     }
 
     printf("Intentaremos generar el archivo: %s\n", tablaHashGenerada2);
-    
+
     tablaHash2 = cargarTablaHashDesdeArchivo(tablaHashGenerada);
 
     printf("Generamos el archivo: %s\n", tablaHashGenerada2);

@@ -46,4 +46,6 @@ void liberarPalabra(Palabra * palabra);
 ListaDePalabras * separarPalabra(Palabra palabra, int posicion);
 
 
+
+
 #endif

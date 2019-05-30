@@ -167,7 +167,10 @@ ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash)
             liberarPalabra(palabraCopiada);
         }
     }
+
+    return listaDeSugerencias;
 }
+
 
 void sugerirOLiberar(TablaHash tablaHash, Palabra * palabra, ListaDePalabras * listaDeSugerencias)
 {
@@ -176,4 +179,46 @@ void sugerirOLiberar(TablaHash tablaHash, Palabra * palabra, ListaDePalabras * l
     } else {
         liberarPalabra(palabra);
     }
+}
+
+void corregirArchivo(FILE * archivo, TablaHash tablaHash)
+{
+    wchar_t caracter = fgetwc(archivo), buffer[LARGO_MAXIMO_PALABRA];
+    Palabra * palabraActual;
+    int contadorDeLineas = 1;
+    for (size_t i = 0; caracter != WEOF; i++) {
+        buffer[i] = caracter;
+        if (caracter == L':' || caracter == L';' || caracter == L',' || caracter == L'.' || caracter == L'?' || caracter == L'!') {
+            buffer[i + 1] = L'\0';
+            palabraActual = crearPalabra(buffer);
+            imprimirSugerencias(*palabraActual, contadorDeLineas, *generarSugerencias(*palabraActual, tablaHash));
+            fgetwc(archivo);
+            i = 0;
+        }
+        if (caracter == L' ') {
+            buffer[i + 1] = L'\0';
+            palabraActual = crearPalabra(buffer);
+            imprimirSugerencias(*palabraActual, contadorDeLineas, *generarSugerencias(*palabraActual, tablaHash));
+            i = 0;
+        }
+        if (caracter == L'\n' || caracter == L'\r') {
+            buffer[i + 1] = L'\0';
+            palabraActual = crearPalabra(buffer);
+            imprimirSugerencias(*palabraActual, contadorDeLineas, *generarSugerencias(*palabraActual, tablaHash));
+            contadorDeLineas++;
+            i = 0;
+        }
+
+        caracter = fgetwc(archivo);
+    }
+}
+
+void imprimirSugerencias(Palabra palabra, int linea, ListaDePalabras listaDeSugerencias)
+{
+    wprintf(L"Linea %d, \"%ls\" no esta en el diccionario.\n", linea, palabra.letras);
+    wprintf(L"Quizas quiso decir: ");
+    for (size_t i = 0; i < listaDeSugerencias.cantidad; i++) {
+        wprintf(L"%ls ", listaDeSugerencias.palabras[i]);
+    }
+    wprintf(L"\n");
 }
