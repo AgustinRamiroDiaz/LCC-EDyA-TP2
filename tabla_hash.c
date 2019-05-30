@@ -160,12 +160,12 @@ ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash)
         palabraCopiada = copiarPalabra(palabra);
         dobleSugerencia = separarPalabra(*palabraCopiada, i);
         if(palabraEnTablaHash(tablaHash, *dobleSugerencia->palabras[0])
-         &&palabraEnTablaHash(tablaHash, *dobleSugerencia->palabras[1])){
-             palabraCopiada = crearPalabra(wcscat(dobleSugerencia->palabras[0]->letras, dobleSugerencia->palabras[1]->letras));
-             agregarPalabraALista(palabraCopiada, listaDeSugerencias);
-         } else {
-             liberarPalabra(palabraCopiada);
-         }
+        &&palabraEnTablaHash(tablaHash, *dobleSugerencia->palabras[1])){
+            palabraCopiada = crearPalabra(wcscat(dobleSugerencia->palabras[0]->letras, dobleSugerencia->palabras[1]->letras));
+            agregarPalabraALista(palabraCopiada, listaDeSugerencias);
+        } else {
+             iberarPalabra(palabraCopiada);
+        }
     }
 }
 
