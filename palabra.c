@@ -102,7 +102,7 @@ wchar_t eliminarLetra(Palabra * palabra, int posicion)
         palabra->letras[i] = palabra->letras[i+1];
     }
     palabra->longitud--;
-    palabra->letras = realloc(palabra, sizeof(wchar_t) * (palabra->longitud + 1));
+    palabra->letras = realloc(palabra->letras, sizeof(wchar_t) * (palabra->longitud + 1));
 
     return eliminada;
 }

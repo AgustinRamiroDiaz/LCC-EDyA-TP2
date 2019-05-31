@@ -16,19 +16,15 @@ int main(int argc, char const *argv[])
 
     if (verificarTablaHash(*tablaHash, *universo)) {
         imprimirTablaHashEnArchivo(*tablaHash, tablaHashGenerada);
-        printf("Se genero el archivo: %s\n", tablaHashGenerada);
+        wprintf(L"Se genero el archivo: %s\n\n", tablaHashGenerada);
     } else {
-        printf("No se pudo hashear el universo\n");
+        wprintf(L"No se pudo hashear el universo\n\n");
     }
 
     tablaHash2 = cargarTablaHashDesdeArchivo(tablaHashGenerada);
 
-    wprintf(L"Comienzan las sugerencias\n");
-
     FILE * archivoTest = abrirArchivo("Test.txt", "r");
     corregirArchivo(archivoTest, *tablaHash2);
-
-    printf("Fin del main\n");
 
     return 0;
 }
