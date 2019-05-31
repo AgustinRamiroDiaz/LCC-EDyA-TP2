@@ -11,6 +11,6 @@ static const int TAMANO_INICIAL_LISTA = 1024;
 static const int TAMANO_INICIAL_LISTA_SUGERENCIAS = 5;
 static const int LARGO_MAXIMO_PALABRA = 500;
 
-static const wchar_t LETRAS_ESPECIALES[] = L"áéíóúÁÉÍÓÚäëïöüÄËÏÖÜ";
+static const wchar_t LETRAS_ESPECIALES[] = L"áéíóúäëïöü";
 
 #endif

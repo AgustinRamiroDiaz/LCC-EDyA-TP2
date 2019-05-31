@@ -23,10 +23,12 @@ unsigned long djb2(Palabra palabra)
 unsigned long funcionHashSecundaria(Palabra palabra, unsigned long constante)
 {
   unsigned long hash = constante;
-
   int letra;
+
   for (int i=0; letra = palabra.letras[i]; i++) {
       hash = (hash ^ letra) + ((hash << 26) + (hash >> 6));
+      //hash = ((hash << 5) + hash) + letra;
+      //hash = letra + (hash << 6) + (hash << 16) - hash;
   }
 
   return hash;
@@ -35,10 +37,10 @@ unsigned long funcionHashSecundaria(Palabra palabra, unsigned long constante)
 unsigned long sdbm(Palabra palabra)
 {
    unsigned long hash = 0;
-   int c;
+   int letra;
 
-   while (c = *(palabra.letras)++)
-       hash = c + (hash << 6) + (hash << 16) - hash;
+   for (int i=0; letra = palabra.letras[i]; i++)
+       hash = letra + (hash << 6) + (hash << 16) - hash;
 
    return hash;
 }
