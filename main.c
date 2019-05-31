@@ -1,6 +1,7 @@
 #include <locale.h>
 #include <assert.h>
 #include "archivo.h"
+#include "sugerencias.h"
 #include "tabla_hash.h"
 
 int main(int argc, char const *argv[])
