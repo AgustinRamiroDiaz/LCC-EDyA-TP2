@@ -29,7 +29,10 @@ TablaHash * armarTablaHash(int cantidadDePalabras)
 
 void crearBuckets(TablaHash * tablaHash, ListaDePalabras ** gruposDePalabras)
 {
+    printf("Tamano tablaHash: %d\n\n", tablaHash->tamano);
+
     for (int i=0; i < tablaHash->tamano; i++) {
+        //printf("Bucket numero: %d\n", i);
         tablaHash->buckets[i] = crearBucket(*gruposDePalabras[i]);
     }
 }
@@ -130,22 +133,25 @@ ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash)
 {
     ListaDePalabras * listaDeSugerencias = armarListaDePalabras(TAMANO_INICIAL_LISTA_SUGERENCIAS);
 
+    wchar_t aux1, aux2;
     Palabra * palabraCopiada;
-
+    palabraCopiada = copiarPalabra(palabra);
 
     for (int i = 0;i < palabra.longitud - 1; i++) {
-        palabraCopiada = copiarPalabra(palabra);
         intercambiarLetras(palabraCopiada, i, i + 1);
         sugerirOLiberar(tablaHash, palabraCopiada, listaDeSugerencias);
+        intercambiarLetras(palabraCopiada, i, i + 1);
     }
 
 
     for (wchar_t caracter = L'a'; caracter <= L'z'; caracter++) {
+        palabraCopiada = copiarPalabra(palabra);
+        agregarLetra(palabraCopiada, caracter, 1);
         for (int i = 1; i < palabra.longitud; i++) {
-            palabraCopiada = copiarPalabra(palabra);
-            agregarLetra(palabraCopiada, caracter, i);
             sugerirOLiberar(tablaHash, palabraCopiada, listaDeSugerencias);
+            intercambiarLetras(palabraCopiada, i, i + 1);
         }
+
         for (int i = 0; i < palabra.longitud; i++) {
             palabraCopiada = copiarPalabra(palabra);
             reemplazarLetra(palabraCopiada, caracter, i);
@@ -153,10 +159,14 @@ ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash)
         }
     }
 
+    palabraCopiada = copiarPalabra(palabra);
+    aux1 = eliminarLetra(palabraCopiada, 0);
     for (int i = 0; i < palabra.longitud; i++) {
-        palabraCopiada = copiarPalabra(palabra);
-        eliminarLetra(palabraCopiada, i);
+        wprintf(L"Palabra: %ls\n", palabraCopiada->letras);
         sugerirOLiberar(tablaHash, palabraCopiada, listaDeSugerencias);
+        aux2 = aux1;
+        aux1 = palabraCopiada->letras[i];
+        palabraCopiada->letras[i] = aux2;
     }
 
     ListaDePalabras * dobleSugerencia;
@@ -171,6 +181,12 @@ ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash)
             liberarPalabra(palabraCopiada);
         }
     }
+
+    // for (size_t profundiad = 0; listaDeSugerencias->cantidad < 5; profundiad++) {
+    //     for (size_t i = 0; i < profundiad; i++) {
+    //         /* code */
+    //     }
+    // }
 
     return listaDeSugerencias;
 }
