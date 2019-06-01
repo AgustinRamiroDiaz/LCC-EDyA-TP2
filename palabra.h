@@ -41,11 +41,14 @@ Palabra * cargarPalabraDesdeArchivo(FILE * archivo);
 
 Palabra * copiarPalabra(Palabra palabra);
 
+void liberarListaDePalabras(ListaDePalabras * listaDePalabras);
+
 void liberarPalabra(Palabra * palabra);
 
 ListaDePalabras * separarPalabra(Palabra palabra, int posicion);
 
+Palabra * unirListaDePalabras(ListaDePalabras listaDePalabras, wchar_t * separador);
 
-
+int caracteresTotalesEnLista(ListaDePalabras listaDePalabras);
 
 #endif

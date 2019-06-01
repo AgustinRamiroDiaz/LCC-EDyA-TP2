@@ -19,7 +19,9 @@ void generarSugerenciasEliminandoLetras(Palabra palabra, TablaHash tablaHash, Li
 
 void generarSugerenciasSeparandoPalabras(Palabra palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias);
 
-void sugerirOLiberar(TablaHash tablaHash, Palabra * palabra, ListaDePalabras * listaDeSugerencias);
+int sugerirSiExiste(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias);
+
+int sugerirOLiberar(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias);
 
 void imprimirSugerencias(Palabra palabra, int linea, ListaDePalabras listaDeSugerencias);
 

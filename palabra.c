@@ -123,6 +123,14 @@ Palabra * copiarPalabra(Palabra palabra)
     return crearPalabra(palabra.letras);
 }
 
+void liberarListaDePalabras(ListaDePalabras * listaDePalabras)
+{
+    for (int i = 0; i < listaDePalabras->cantidad; i++) {
+        liberarPalabra(listaDePalabras->palabras[i]);
+    }
+    free(listaDePalabras);
+}
+
 void liberarPalabra(Palabra * palabra)
 {
     free(palabra->letras);
@@ -135,10 +143,47 @@ ListaDePalabras * separarPalabra(Palabra palabra, int posicion)
     wchar_t buffer[LARGO_MAXIMO_PALABRA];
 
     wcsncpy(buffer, palabra.letras, posicion);
+    buffer[posicion] = L'\0';
     agregarPalabraALista(crearPalabra(buffer), listaDePalabras);
 
     wcsncpy(buffer, palabra.letras + posicion, palabra.longitud - posicion);
+    buffer[palabra.longitud - posicion] = L'\0';
     agregarPalabraALista(crearPalabra(buffer), listaDePalabras);
 
     return listaDePalabras;
+}
+
+Palabra * unirListaDePalabras(ListaDePalabras listaDePalabras, wchar_t * separador)
+{
+    int caracteresEnLista = caracteresTotalesEnLista(listaDePalabras);
+    int longitudDeSeparador = wcslen(separador);
+    int caracteresEnSeparadores = longitudDeSeparador * (listaDePalabras.cantidad - 1);
+
+    int nuevoLargo = caracteresEnLista + caracteresEnSeparadores + 1;
+    wchar_t buffer[nuevoLargo];
+
+    int posicion = 0;
+    for (int i = 0; i < listaDePalabras.cantidad; i++)
+    {
+        if (i) {
+            wcscpy(buffer + posicion, separador);
+            posicion += longitudDeSeparador;
+        }
+        wcscpy(buffer + posicion, listaDePalabras.palabras[i]->letras);
+        posicion += listaDePalabras.palabras[i]->longitud;
+    }
+    buffer[posicion] = L'\0';
+
+    return crearPalabra(buffer);
+}
+
+int caracteresTotalesEnLista(ListaDePalabras listaDePalabras)
+{
+    int cantidad = 0;
+
+    for (int i = 0; i < listaDePalabras.cantidad; i++) {
+        cantidad += listaDePalabras.palabras[i]->longitud;
+    }
+
+    return cantidad;
 }
