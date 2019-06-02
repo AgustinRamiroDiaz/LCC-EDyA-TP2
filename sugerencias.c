@@ -147,6 +147,7 @@ void generarSugerenciasParaEliminaciones(ListaDePalabras * palabrasConEliminacio
         liberarPalabra(palabraActual);
         palabrasConEliminaciones->palabras++;
         palabrasConEliminaciones->cantidad--;
+        palabrasConEliminaciones->capacidad--;
         i--;
     }
 }
