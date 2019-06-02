@@ -73,11 +73,11 @@ ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash)
 {
     ListaDePalabras * listaDeSugerencias = armarListaDePalabras(TAMANO_INICIAL_LISTA_SUGERENCIAS);
 
-    generarSugerenciasIntercambiandoLetras(palabra, tablaHash, listaDeSugerencias);
-    generarSugerenciasAgregandoLetras(palabra, tablaHash, listaDeSugerencias);
-    generarSugerenciasReemplazandoLetras(palabra, tablaHash, listaDeSugerencias);
-    generarSugerenciasEliminandoLetras(palabra, tablaHash, listaDeSugerencias);
-    generarSugerenciasSeparandoPalabras(palabra, tablaHash, listaDeSugerencias);
+    ListaDePalabras * palabrasConEliminaciones = aplicarOperacionesSobrePalabra(palabra, tablaHash, listaDeSugerencias);
+
+    while (listaDeSugerencias->cantidad < TAMANO_INICIAL_LISTA_SUGERENCIAS) {
+        generarSugerenciasParaEliminaciones(palabrasConEliminaciones, tablaHash, listaDeSugerencias);
+    }
 
     return listaDeSugerencias;
 
@@ -132,6 +132,25 @@ ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash)
     }*/
 }
 
+void generarSugerenciasParaEliminaciones(ListaDePalabras * palabrasConEliminaciones, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
+{
+    Palabra * palabraActual;
+    int cantidadDePalabras = palabrasConEliminaciones->cantidad;
+    ListaDePalabras * eliminaciones;
+
+    for (int i = 0; i < cantidadDePalabras && listaDeSugerencias->cantidad < TAMANO_INICIAL_LISTA_SUGERENCIAS; i++) {
+        palabraActual = palabrasConEliminaciones->palabras[i];
+        eliminaciones = aplicarOperacionesSobrePalabra(*palabraActual, tablaHash, listaDeSugerencias);
+        cantidadDePalabras += eliminaciones->cantidad;
+        concatenarListasDePalabras(palabrasConEliminaciones, eliminaciones);
+
+        liberarPalabra(palabraActual);
+        palabrasConEliminaciones->palabras++;
+        palabrasConEliminaciones->cantidad--;
+        i--;
+    }
+}
+
 void generarSugerenciasIntercambiandoLetras(Palabra palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
 {
     Palabra * palabraCopiada = copiarPalabra(palabra);
@@ -143,6 +162,20 @@ void generarSugerenciasIntercambiandoLetras(Palabra palabra, TablaHash tablaHash
     }
 
     liberarPalabra(palabraCopiada);
+}
+
+
+ListaDePalabras * aplicarOperacionesSobrePalabra(Palabra palabra, TablaHash tablaHash, ListaDePalabras * listaDesugerencias)
+{
+    ListaDePalabras * listaDeSugerencias = armarListaDePalabras(TAMANO_INICIAL_LISTA_SUGERENCIAS);
+
+    generarSugerenciasIntercambiandoLetras(palabra, tablaHash, listaDeSugerencias);
+    generarSugerenciasAgregandoLetras(palabra, tablaHash, listaDeSugerencias);
+    generarSugerenciasReemplazandoLetras(palabra, tablaHash, listaDeSugerencias);
+    generarSugerenciasSeparandoPalabras(palabra, tablaHash, listaDeSugerencias);
+    ListaDePalabras * palabrasConEliminaciones = generarSugerenciasEliminandoLetras(palabra, tablaHash, listaDeSugerencias);
+
+    return palabrasConEliminaciones;
 }
 
 void generarSugerenciasAgregandoLetras(Palabra palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
@@ -199,15 +232,23 @@ void generarSugerenciasReemplazandoLetras(Palabra palabra, TablaHash tablaHash, 
     }
 }
 
-void generarSugerenciasEliminandoLetras(Palabra palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
+ListaDePalabras * generarSugerenciasEliminandoLetras(Palabra palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
 {
+    int existe;
     Palabra * palabraCopiada;
+    ListaDePalabras * palabrasGeneradas = armarListaDePalabras(TAMANO_INICIAL_LISTA);
 
     for (int i = 0; i < palabra.longitud; i++) {
         palabraCopiada = copiarPalabra(palabra);
         eliminarLetra(palabraCopiada, i);
-        sugerirOLiberar(palabraCopiada, tablaHash, listaDeSugerencias);
+        existe = sugerirSiExiste(palabraCopiada, tablaHash, listaDeSugerencias);
+        
+        if (!existe) {
+            agregarPalabraALista(palabraCopiada, palabrasGeneradas);
+        }
     }
+
+    return palabrasGeneradas;
 }
 
 void generarSugerenciasSeparandoPalabras(Palabra palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)

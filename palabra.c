@@ -187,3 +187,10 @@ int caracteresTotalesEnLista(ListaDePalabras listaDePalabras)
 
     return cantidad;
 }
+
+void concatenarListasDePalabras(ListaDePalabras * destino, ListaDePalabras * origen)
+{
+    for (int i = 0; i < origen->cantidad; i++) {
+        agregarPalabraALista(origen->palabras[i], destino);
+    }
+}

@@ -51,4 +51,6 @@ Palabra * unirListaDePalabras(ListaDePalabras listaDePalabras, wchar_t * separad
 
 int caracteresTotalesEnLista(ListaDePalabras listaDePalabras);
 
+void concatenarListasDePalabras(ListaDePalabras * destino, ListaDePalabras * origen);
+
 #endif
