@@ -2,7 +2,6 @@
 #include "palabra.h"
 #include "constantes.h"
 
-//Crea un *ListaDePalabras con el contenido del archivo
 ListaDePalabras * crearListaDePalabrasDesdeArchivo(FILE * archivo)
 {
     Palabra * palabra;
@@ -15,7 +14,6 @@ ListaDePalabras * crearListaDePalabrasDesdeArchivo(FILE * archivo)
     return listaDePalabras;
 }
 
-//Arma una ListaDePalabras vacía
 ListaDePalabras * armarListaDePalabras(int cantidadDePalabras)
 {
     ListaDePalabras * listaDePalabras = malloc(sizeof(ListaDePalabras));
@@ -26,7 +24,6 @@ ListaDePalabras * armarListaDePalabras(int cantidadDePalabras)
     return listaDePalabras;
 }
 
-//Agrega la palabra al final de la listaDePalabras
 void agregarPalabraALista(Palabra * palabra, ListaDePalabras * listaDePalabras)
 {
     if (listaDePalabras->cantidad == listaDePalabras->capacidad) {
@@ -37,7 +34,6 @@ void agregarPalabraALista(Palabra * palabra, ListaDePalabras * listaDePalabras)
     listaDePalabras->cantidad++;
 }
 
-//Duplica el espacio reservado en memoria para las palabras de listaDePalabras
 void agrandarListaDePalabras(ListaDePalabras * listaDePalabras)
 {
     int nuevaCapacidad = listaDePalabras->capacidad * 2;
@@ -45,7 +41,6 @@ void agrandarListaDePalabras(ListaDePalabras * listaDePalabras)
     listaDePalabras->capacidad = nuevaCapacidad;
 }
 
-//Crea un * Palabra a partir de un * wchar_t
 Palabra * crearPalabra(wchar_t * letras)
 {
     Palabra * palabra = malloc(sizeof(Palabra));
@@ -57,7 +52,6 @@ Palabra * crearPalabra(wchar_t * letras)
     return palabra;
 }
 
-//Retorna 1 si las palabras son iguales y 0 si no
 int sonPalabrasIguales(Palabra primeraPalabra, Palabra segundaPalabra)
 {
     if (primeraPalabra.longitud != segundaPalabra.longitud) {
@@ -67,13 +61,11 @@ int sonPalabrasIguales(Palabra primeraPalabra, Palabra segundaPalabra)
     return 0 == wcscmp(primeraPalabra.letras, segundaPalabra.letras);
 }
 
-//Retorna 1 si las palabras son distintas y 0 si no
 int sonPalabrasDistintas(Palabra primeraPalabra, Palabra segundaPalabra)
 {
     return !sonPalabrasIguales(primeraPalabra, segundaPalabra);
 }
 
-//Intercambia las letras en primeraPosicion y segundaPosicion de la palabra
 void intercambiarLetras(Palabra * palabra, int primeraPosicion, int segundaPosicion)
 {
     wchar_t primeraLetra = palabra->letras[primeraPosicion];
@@ -81,7 +73,6 @@ void intercambiarLetras(Palabra * palabra, int primeraPosicion, int segundaPosic
     reemplazarLetra(palabra, segundaLetra, primeraPosicion);
 }
 
-//Reemplaza la letra en la posicion de la palabra por letra
 wchar_t reemplazarLetra(Palabra * palabra, wchar_t letra, int posicion)
 {
     wchar_t eliminada = palabra->letras[posicion];
@@ -90,7 +81,6 @@ wchar_t reemplazarLetra(Palabra * palabra, wchar_t letra, int posicion)
     return eliminada;
 }
 
-//Agrega la letra en la posicion de la palabra
 void agregarLetra(Palabra * palabra, wchar_t letra, int posicion)
 {
     palabra->longitud++;
@@ -103,7 +93,6 @@ void agregarLetra(Palabra * palabra, wchar_t letra, int posicion)
 
 }
 
-//Elimina la letra en la posicion de la palabra
 wchar_t eliminarLetra(Palabra * palabra, int posicion)
 {
     wchar_t eliminada = palabra->letras[posicion];
@@ -117,7 +106,6 @@ wchar_t eliminarLetra(Palabra * palabra, int posicion)
     return eliminada;
 }
 
-//Retorna un * Palabra de la palabra leída del archivo
 Palabra * cargarPalabraDesdeArchivo(FILE * archivo)
 {
     wchar_t buffer[LARGO_MAXIMO_PALABRA];
@@ -129,13 +117,11 @@ Palabra * cargarPalabraDesdeArchivo(FILE * archivo)
     return NULL;
 }
 
-//Retorna una copia de la palabra
 Palabra * copiarPalabra(Palabra palabra)
 {
     return crearPalabra(palabra.letras);
 }
 
-//Libera la memoria reservada de la listaDePalabras
 void liberarListaDePalabras(ListaDePalabras * listaDePalabras)
 {
     for (int i = 0; i < listaDePalabras->cantidad; i++) {
@@ -204,7 +190,7 @@ int caracteresTotalesEnLista(ListaDePalabras listaDePalabras)
 int agregarPalabraAListaSiNoEstaRepetida(Palabra * palabra, ListaDePalabras * listaDePalabras)
 {
     int estaEnLista = palabraEstaEnLista(*palabra, *listaDePalabras);
-    
+
     if (!estaEnLista) {
         agregarPalabraALista(palabra, listaDePalabras);
     }

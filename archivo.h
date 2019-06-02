@@ -4,8 +4,10 @@
 #include <wchar.h>
 #include <stdio.h>
 
+//Abre el archivo con un modo dado
 FILE * abrirArchivo(char * nombreDeArchivo, char * modo);
 
+//Cierra el archivo
 void cerrarArchivo(FILE * archivo);
 
 int esLetra(wchar_t caracter);
