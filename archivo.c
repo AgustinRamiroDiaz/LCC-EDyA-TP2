@@ -38,12 +38,12 @@ int esLetraEspecial(wchar_t caracter)
 int esFinDePalabra(wchar_t caracter)
 {
     int encontrado = 0;
-    wchar_t caracteresPosibles[7] = {L' ', L':', L';', L',', L'.', L'?', L'!'};
+    wchar_t caracteresPosibles[7] = L" :;,.?!";
 
     for (int i = 0; i < 6 && !encontrado; i++) {
         encontrado = (caracter == caracteresPosibles[i]);
     }
-    
+
     return (encontrado || esFinDeLinea(caracter));
 }
 
