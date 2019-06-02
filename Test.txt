@@ -1,1 +1,3 @@
-estr texxto teine algunps erróres 
+Este texto, que tiene errores, es contraproducente.
+Guimpel!
+Chau.

@@ -47,10 +47,16 @@ void liberarPalabra(Palabra * palabra);
 
 ListaDePalabras * separarPalabra(Palabra palabra, int posicion);
 
-Palabra * unirListaDePalabras(ListaDePalabras listaDePalabras, wchar_t * separador);
+Palabra * unirPalabrasEnLista(ListaDePalabras listaDePalabras, wchar_t * separador);
 
 int caracteresTotalesEnLista(ListaDePalabras listaDePalabras);
 
+int agregarPalabraAListaSiNoEstaRepetida(Palabra * palabra, ListaDePalabras * listaDePalabras);
+
+void concatenarListasDePalabrasSinRepetir(ListaDePalabras * destino, ListaDePalabras * origen);
+
 void concatenarListasDePalabras(ListaDePalabras * destino, ListaDePalabras * origen);
+
+int palabraEstaEnLista(Palabra palabra, ListaDePalabras listaDePalabras);
 
 #endif

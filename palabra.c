@@ -153,7 +153,7 @@ ListaDePalabras * separarPalabra(Palabra palabra, int posicion)
     return listaDePalabras;
 }
 
-Palabra * unirListaDePalabras(ListaDePalabras listaDePalabras, wchar_t * separador)
+Palabra * unirPalabrasEnLista(ListaDePalabras listaDePalabras, wchar_t * separador)
 {
     int caracteresEnLista = caracteresTotalesEnLista(listaDePalabras);
     int longitudDeSeparador = wcslen(separador);
@@ -188,9 +188,46 @@ int caracteresTotalesEnLista(ListaDePalabras listaDePalabras)
     return cantidad;
 }
 
+int agregarPalabraAListaSiNoEstaRepetida(Palabra * palabra, ListaDePalabras * listaDePalabras)
+{
+    int estaEnLista = palabraEstaEnLista(*palabra, *listaDePalabras);
+    
+    if (!estaEnLista) {
+        agregarPalabraALista(palabra, listaDePalabras);
+    }
+
+    return !estaEnLista;
+}
+
+void concatenarListasDePalabrasSinRepetir(ListaDePalabras * destino, ListaDePalabras * origen)
+{
+    Palabra * palabraActual;
+
+    for (int i = 0; i < origen->cantidad; i++) {
+        palabraActual = origen->palabras[i];
+
+        if (!palabraEstaEnLista(*origen->palabras[i], *destino)) {
+            agregarPalabraALista(origen->palabras[i], destino);
+        }
+    }
+}
+
 void concatenarListasDePalabras(ListaDePalabras * destino, ListaDePalabras * origen)
 {
     for (int i = 0; i < origen->cantidad; i++) {
         agregarPalabraALista(origen->palabras[i], destino);
     }
+}
+
+int palabraEstaEnLista(Palabra palabra, ListaDePalabras listaDePalabras)
+{
+    int encontrada = 0;
+    Palabra * palabraActual;
+
+    for (int i = 0; i < listaDePalabras.cantidad && !encontrada; i++) {
+        palabraActual = listaDePalabras.palabras[i];
+        encontrada = sonPalabrasIguales(palabra, *palabraActual);
+    }
+
+    return encontrada;
 }
