@@ -15,7 +15,4 @@ unsigned long djb2(Palabra palabra);
 //con el fin de ser un hash perfecto
 unsigned long funcionHashSecundaria(Palabra palabra, unsigned long constante);
 
-//Funcion de hasheo
-unsigned long sdbm(Palabra palabra);
-
 #endif

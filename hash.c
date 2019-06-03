@@ -13,7 +13,7 @@ unsigned long djb2(Palabra palabra)
   unsigned long hash = CONSTANTE_HASHEO;
 
   unsigned long letra;
-  for (int i=0; letra = palabra.letras[i]; i++) {
+  for (unsigned long i = 0; letra = palabra.letras[i]; i++) {
       hash = ((hash << 5) + hash) + letra;
   }
 
@@ -25,7 +25,7 @@ unsigned long funcionHashSecundaria(Palabra palabra, unsigned long constante)
   unsigned long hash = constante;
   unsigned long letra;
 
-  for (int i=0; letra = palabra.letras[i]; i++) {
+  for (unsigned long i = 0; letra = palabra.letras[i]; i++) {
       hash = (hash ^ letra) + ((hash << 26) + (hash >> 6));
   }
 
