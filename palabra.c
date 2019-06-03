@@ -5,7 +5,7 @@
 ListaDePalabras * crearListaDePalabrasDesdeArchivo(FILE * archivo)
 {
     Palabra * palabra;
-    ListaDePalabras * listaDePalabras = armarListaDePalabras(TAMANO_INICIAL_LISTA);
+    ListaDePalabras * listaDePalabras = armarListaDePalabras(CAPACIDAD_INICIAL_LISTA);
 
     while(palabra = cargarPalabraDesdeArchivo(archivo)) {
         agregarPalabraALista(palabra, listaDePalabras);

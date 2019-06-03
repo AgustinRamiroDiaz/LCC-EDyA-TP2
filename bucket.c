@@ -24,7 +24,7 @@ Bucket * armarBucket(int cantidadDePalabras)
 
 int calcularTamanoDeBucket(int cantidadDePalabras)
 {
-    return cantidadDePalabras * FACTOR_TAMANO_BUCKET;
+    return cantidadDePalabras * FACTOR_TAMANO_CAPACIDAD_BUCKET;
 }
 
 void llenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras)

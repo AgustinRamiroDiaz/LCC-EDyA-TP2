@@ -38,7 +38,7 @@ ListaDePalabras ** agruparPalabras(TablaHash * tablaHash, ListaDePalabras * list
 {
     Palabra * palabraActual;
     int numeroDeBucket;
-    ListaDePalabras ** gruposDePalabras = crearGruposDePalabras(tablaHash, listaDePalabras);
+    ListaDePalabras ** gruposDePalabras = armarGruposDePalabras(tablaHash, listaDePalabras);
 
     for (int i = 0; i < listaDePalabras->cantidad; i++) {
         palabraActual = listaDePalabras->palabras[i];
@@ -49,7 +49,7 @@ ListaDePalabras ** agruparPalabras(TablaHash * tablaHash, ListaDePalabras * list
     return gruposDePalabras;
 }
 
-ListaDePalabras ** crearGruposDePalabras(TablaHash * tablaHash, ListaDePalabras * palabras)
+ListaDePalabras ** armarGruposDePalabras(TablaHash * tablaHash, ListaDePalabras * palabras)
 {
     int elementosPorBucket = ceil((float) palabras->cantidad / (float) tablaHash->tamano);
     ListaDePalabras ** gruposDePalabras = malloc(sizeof(ListaDePalabras*) * tablaHash->tamano);
@@ -81,7 +81,8 @@ int calcularCantidadDeBuckets(int cantidadDePalabras)
 
 int verificarTablaHash(TablaHash tablaHash, ListaDePalabras universo)
 {
-    int numeroDeBucket, esValida = 1;
+    int numeroDeBucket
+    int esValida = (tablaHash->cantidadDeElementos == universo->cantidad);
     Palabra * palabraActual;
 
     for (int i = 0; i < universo.cantidad && esValida; i++) {
