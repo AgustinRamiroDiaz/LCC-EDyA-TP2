@@ -93,15 +93,11 @@ void generarSugerenciasModificandoPalabra(Palabra palabra, TablaHash tablaHash, 
 
 void generarSugerenciasIntercambiandoLetras(Palabra palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
 {
-    Palabra * palabraCopiada = copiarPalabra(palabra);
-
     for (int pos = 0; pos < palabra.longitud - 1; pos++) {
-        intercambiarLetrasAdyacentes(palabraCopiada, pos);
-        sugerirSiExiste(palabraCopiada, tablaHash, listaDeSugerencias);
-        intercambiarLetrasAdyacentes(palabraCopiada, pos);
+        intercambiarLetrasAdyacentes(&palabra, pos);
+        sugerirSiExiste(&palabra, tablaHash, listaDeSugerencias);
+        intercambiarLetrasAdyacentes(&palabra, pos);
     }
-
-    liberarPalabra(palabraCopiada);
 }
 
 void generarSugerenciasAgregandoLetras(Palabra palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
@@ -209,7 +205,6 @@ int sugerirSiExiste(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * li
 
     if (palabraExiste) {
         Palabra * palabraCopiada = copiarPalabra(*palabra);
-
         fueAgregada = agregarPalabraAListaSiNoEstaRepetida(palabraCopiada, listaDeSugerencias);
 
         if (!fueAgregada) {
