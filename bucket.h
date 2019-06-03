@@ -49,7 +49,16 @@ void limpiarBucket(Bucket * bucket);
 //Obtiene el hash secundario de la palabra con la constante de hasheo del bucket
 int obtenerHashSecundario(Bucket bucket, Palabra palabra);
 
-//
+/*
+Imprime el bucket en un archivo de la forma:
+constanteDeHasheo capacidad
+palabra1
+palabra2
+...
+palabraTamano
+
+Donde funcionHashSecundaria(palabrai) = i
+*/
 void imprimirBucketEnArchivo(Bucket bucket, FILE * archivo);
 
 Bucket * cargarBucketDesdeArchivo(FILE * archivo);
