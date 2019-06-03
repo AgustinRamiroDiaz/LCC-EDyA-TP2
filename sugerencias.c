@@ -192,10 +192,8 @@ void generarSugerenciasSeparandoPalabra(Palabra palabra, TablaHash tablaHash, Li
 int sugerirSiExiste(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
 {
     int fueAgregada = 0, palabraExiste = palabraEnTablaHash(tablaHash, *palabra);
-
     if (palabraExiste) {
         Palabra * palabraCopiada = copiarPalabra(*palabra);
-        wprintf(L"palabra existe: %ls", palabraCopiada->letras);
         fueAgregada = agregarPalabraAListaSiNoEstaRepetida(palabraCopiada, listaDeSugerencias);
 
         if (!fueAgregada) {

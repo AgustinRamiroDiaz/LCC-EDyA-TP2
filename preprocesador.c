@@ -36,10 +36,17 @@ int main(int argc, char const *argv[])
         wprintf(L"No se pudo hashear el universo\n");
     }
 
-    liberarListaDePalabras(universo);
+
     liberarTablaHash(tablaHash);
+    liberarListaDePalabras(universo);
     cerrarArchivo(archivoDeUniverso);
     cerrarArchivo(archivoDeTablaHash);
 
+    archivoDeTablaHash = fopen("tabla-hash.txt", "r");
+    tablaHash = cargarTablaHashDesdeArchivo(archivoDeTablaHash);
+    printf("%d\n", verificarTablaHash(*tablaHash, *universo));
+    fclose(archivoDeTablaHash);
+
+    liberarTablaHash(tablaHash);
     return 0;
 }
