@@ -1,4 +1,5 @@
 #include <malloc.h>
+#include <assert.h>
 #include "palabra.h"
 #include "constantes.h"
 
@@ -60,8 +61,8 @@ void agregarPalabraALista(Palabra * palabra, ListaDePalabras * listaDePalabras)
 
 void agrandarListaDePalabras(ListaDePalabras * listaDePalabras)
 {
-    listaDePalabras->palabras = realloc(listaDePalabras->palabras, sizeof(Palabra) * nuevaCapacidad);
     listaDePalabras->capacidad *= FACTOR_AGRANDAR_CAPACIDAD_LISTA;
+    listaDePalabras->palabras = realloc(listaDePalabras->palabras, sizeof(Palabra) * listaDePalabras->capacidad);
 }
 
 Palabra * copiarPalabra(Palabra palabra)
@@ -90,7 +91,7 @@ int sonPalabrasIguales(Palabra primeraPalabra, Palabra segundaPalabra)
         return 0;
     }
 
-    return !wcscmp(primeraPalabra.letras, segundaPalabra.letras);
+    return 0 == wcscmp(primeraPalabra.letras, segundaPalabra.letras);
 }
 
 int sonPalabrasDistintas(Palabra primeraPalabra, Palabra segundaPalabra)
@@ -214,8 +215,8 @@ void concatenarListasDePalabrasSinRepetir(ListaDePalabras * destino, ListaDePala
     for (int i = 0; i < origen->cantidad; i++) {
         palabraActual = origen->palabras[i];
 
-        if (!palabraEstaEnLista(*origen->palabras[i], *destino)) {
-            agregarPalabraALista(copiarPalabra(*origen->palabras[i]), destino);
+        if (!palabraEstaEnLista(*palabraActual, *destino)) {
+            agregarPalabraALista(copiarPalabra(*palabraActual), destino);
         }
     }
 }

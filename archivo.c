@@ -41,10 +41,10 @@ int esLetraEspecial(wchar_t caracter)
 
 int esFinDePalabra(wchar_t caracter)
 {
-    int encontrado = 0, cantidadDeCaracteres = wcslen(SIGNOS_ESPECIALEs);
+    int encontrado = 0, cantidadDeCaracteres = wcslen(SIGNOS_ESPECIALES);
 
     for (int i = 0; i < cantidadDeCaracteres && !encontrado; i++) {
-        encontrado = (caracter == SIGNOS_ESPECIALEs[i]);
+        encontrado = (caracter == SIGNOS_ESPECIALES[i]);
     }
 
     return (encontrado || esFinDeLinea(caracter));

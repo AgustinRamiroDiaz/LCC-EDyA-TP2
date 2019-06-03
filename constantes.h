@@ -20,7 +20,6 @@ static const wchar_t LETRAS_ESPECIALES[] = L"áéíóúäëïöüñ";
 static const wchar_t SIGNOS_ESPECIALES[] = L" :;,.?!";
 static const wchar_t SALTOS_DE_LINEA[] = L"\n\r";
 
-
 static const char ARCHIVO_TABLA_HASH[] = "tabla-hash.txt";
 static const char ARCHIVO_UNIVERSO_DEFECTO[] = "universo.txt";
 static const char ARCHIVO_TEXTO_ENTRADA_POR_DEFECTO[] = "texto.txt";
