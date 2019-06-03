@@ -3,11 +3,17 @@
 
 #include <wchar.h>
 
+//Palabra es una estructura la cual almacena
+//un array de wchar_t y la longitud del mismo
 typedef struct {
     int longitud;
     wchar_t * letras;
 } Palabra;
 
+//ListaDePalabras es una estructura la cual almacena
+//un array de punteros a palabras,
+//la cantidad de palabras actuales,
+//la capacidad total del array de punteros a palabras
 typedef struct {
     int cantidad, capacidad;
     Palabra ** palabras;
