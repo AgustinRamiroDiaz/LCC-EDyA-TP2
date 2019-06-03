@@ -18,7 +18,11 @@ Linea 2, "Guimpel" no esta en el diccionario.
 Quizas quiso decir:
 miel, piel, ipil, ámel, fiel, hiel, niel, riel
 
-Linea 3, "Chau" no esta en el diccionario.
+Linea 3, "aaaaaaaaaaaa" no esta en el diccionario.
+Quizas quiso decir:
+aba, aca, aja, ala, ama, ana, apa, ara, asa, ata, aña
+
+Linea 4, "Chau" no esta en el diccionario.
 Quizas quiso decir:
 chau, jau, hao, tau, wau, haz, ha u, ha
 

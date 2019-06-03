@@ -40,11 +40,11 @@ int sonPalabrasIguales(Palabra primeraPalabra, Palabra segundaPalabra);
 //Retorna 1 si las palabras son distintas y 0 si no
 int sonPalabrasDistintas(Palabra primeraPalabra, Palabra segundaPalabra);
 
-//Intercambia 2 letras de lugar en la palabra
-void intercambiarLetras(Palabra * palabra, int primeraPosicion, int segundaPosicion);
-
 //Intercambia 2 letras adyacentes de la palabra
 void intercambiarLetrasAdyacentes(Palabra * palabra, int posicion);
+
+//Intercambia 2 letras de lugar en la palabra
+void intercambiarLetras(Palabra * palabra, int primeraPosicion, int segundaPosicion);
 
 //Reemplaza una letra de una palabra
 wchar_t reemplazarLetra(Palabra * palabra, wchar_t letra, int posicion);
@@ -52,7 +52,7 @@ wchar_t reemplazarLetra(Palabra * palabra, wchar_t letra, int posicion);
 //Agrega una letra a la palabra
 void agregarLetra(Palabra * palabra, wchar_t letra, int posicion);
 
-//Elimina la letra en la posicion de la palabra
+//Elimina una letra de la palabra
 wchar_t eliminarLetra(Palabra * palabra, int posicion);
 
 //Retorna una palabra de lo leido del archivo
