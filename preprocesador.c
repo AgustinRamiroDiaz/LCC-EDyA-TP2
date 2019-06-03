@@ -5,14 +5,14 @@
 
 FILE * obtenerArchivoDeUniverso(int argc, char const *argv[])
 {
-    char * nombreArchivoDeUniverso;
+    char const * nombreArchivoDeUniverso;
 
-    if (argc > 0) {
-        nombreArchivoDeUniverso = argv[0];
+    if (argc > 1) {
+        nombreArchivoDeUniverso = argv[1];
     } else {
         nombreArchivoDeUniverso = ARCHIVO_UNIVERSO_DEFECTO;
     }
-    FILE * archivoDeUniverso = abrirArchivo(nombreArchivoDeUniverso, "r");
+    FILE * archivoDeUniverso = abrirArchivo((char *) nombreArchivoDeUniverso, "r");
 
     return archivoDeUniverso;
 }
@@ -22,7 +22,7 @@ int main(int argc, char const *argv[])
     setlocale(LC_ALL, "");
 
     FILE * archivoDeUniverso = obtenerArchivoDeUniverso(argc, argv);
-    FILE * archivoDeTablaHash = abrirArchivo(ARCHIVO_TABLA_HASH, "w");
+    FILE * archivoDeTablaHash = abrirArchivo((char *) ARCHIVO_TABLA_HASH, "w");
 
     ListaDePalabras * universo = crearListaDePalabrasDesdeArchivo(archivoDeUniverso);
     TablaHash * tablaHash = crearTablaHash(universo);

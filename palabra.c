@@ -66,6 +66,11 @@ int sonPalabrasDistintas(Palabra primeraPalabra, Palabra segundaPalabra)
     return !sonPalabrasIguales(primeraPalabra, segundaPalabra);
 }
 
+void intercambiarLetrasAdyacentes(Palabra * palabra, int posicion)
+{
+    intercambiarLetras(palabra, posicion, posicion + 1);
+}
+
 void intercambiarLetras(Palabra * palabra, int primeraPosicion, int segundaPosicion)
 {
     wchar_t primeraLetra = palabra->letras[primeraPosicion];
@@ -206,7 +211,7 @@ void concatenarListasDePalabrasSinRepetir(ListaDePalabras * destino, ListaDePala
         palabraActual = origen->palabras[i];
 
         if (!palabraEstaEnLista(*origen->palabras[i], *destino)) {
-            agregarPalabraALista(origen->palabras[i], destino);
+            agregarPalabraALista(copiarPalabra(*origen->palabras[i]), destino);
         }
     }
 }

@@ -76,6 +76,8 @@ void generarSugerenciasParaEliminaciones(ListaDePalabras * palabrasConEliminacio
             concatenarListasDePalabrasSinRepetir(palabrasConEliminaciones, nuevasPalabrasConEliminaciones);
         }
     }
+
+    liberarListaDePalabras(nuevasPalabrasConEliminaciones);
 }
 
 void generarSugerenciasModificandoPalabra(Palabra palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
@@ -90,9 +92,9 @@ void generarSugerenciasIntercambiandoLetras(Palabra palabra, TablaHash tablaHash
     Palabra * palabraCopiada = copiarPalabra(palabra);
 
     for (int pos = 0; pos < palabra.longitud - 1; pos++) {
-        intercambiarLetras(palabraCopiada, pos, pos + 1);
+        intercambiarLetrasAdyacentes(palabraCopiada, pos);
         sugerirSiExiste(palabraCopiada, tablaHash, listaDeSugerencias);
-        intercambiarLetras(palabraCopiada, pos, pos + 1);
+        intercambiarLetrasAdyacentes(palabraCopiada, pos);
     }
 
     liberarPalabra(palabraCopiada);
@@ -107,7 +109,7 @@ void generarSugerenciasAgregandoLetras(Palabra palabra, TablaHash tablaHash, Lis
         agregarLetra(palabraCopiada, caracter, 0);
 
         for (int pos = 0; pos < palabra.longitud - 1; pos++) {
-            intercambiarLetras(palabraCopiada, pos, pos + 1);
+            intercambiarLetrasAdyacentes(palabraCopiada, pos);
             sugerirSiExiste(palabraCopiada, tablaHash, listaDeSugerencias);
         }
         liberarPalabra(palabraCopiada);
@@ -121,7 +123,7 @@ void generarSugerenciasAgregandoLetras(Palabra palabra, TablaHash tablaHash, Lis
 
         for (int pos = 0; pos < palabra.longitud - 1; pos++) {
             palabraCopiada = copiarPalabra(palabra);
-            intercambiarLetras(palabraCopiada, pos, pos + 1);
+            intercambiarLetrasAdyacentes(palabraCopiada, pos);
             sugerirSiExiste(palabraCopiada, tablaHash, listaDeSugerencias);
         }
     }
@@ -237,5 +239,5 @@ void imprimirSugerenciasEnArchivo(Palabra palabra, int linea, ListaDePalabras li
     } else {
         fwprintf(archivoDeCorrecciones, L"No se encontraron sugerencias.");
     }
-    wprintf(L"\n\n");
+    fwprintf(archivoDeCorrecciones, L"\n\n");
 }
