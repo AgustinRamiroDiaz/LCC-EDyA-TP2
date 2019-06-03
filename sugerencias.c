@@ -40,7 +40,7 @@ void verificarPalabra(wchar_t * letrasLeidas, TablaHash tablaHash, int numeroDeL
         imprimirSugerenciasEnArchivo(*palabra, numeroDeLinea, *listaDeSugerencias, archivoDeCorrecciones);
         liberarListaDePalabras(listaDeSugerencias);
     }
-    
+
     liberarPalabra(palabra);
 }
 
@@ -69,7 +69,7 @@ void generarSugerenciasParaEliminaciones(ListaDePalabras * palabrasConEliminacio
     for (int i = 0; i < cantidadDePalabras && listaDeSugerencias->cantidad < CANTIDAD_MINIMA_SUGERENCIAS; i++) {
         palabraActual = palabrasConEliminaciones->palabras[i];
         generarSugerenciasModificandoPalabra(*palabraActual, tablaHash, listaDeSugerencias);
-        
+
         if (palabraActual->longitud > 1) {
             nuevasPalabrasConEliminaciones = generarSugerenciasEliminandoLetras(*palabraActual, tablaHash, listaDeSugerencias);
             cantidadDePalabras += nuevasPalabrasConEliminaciones->cantidad;
@@ -156,13 +156,13 @@ ListaDePalabras * generarSugerenciasEliminandoLetras(Palabra palabra, TablaHash 
 {
     int existe;
     Palabra * palabraCopiada;
-    ListaDePalabras * palabrasGeneradas = armarListaDePalabras(TAMANO_INICIAL_LISTA);
+    ListaDePalabras * palabrasGeneradas = armarListaDePalabras(CAPACIDAD_INICIAL_LISTA);
 
     for (int i = 0; i < palabra.longitud; i++) {
         palabraCopiada = copiarPalabra(palabra);
         eliminarLetra(palabraCopiada, i);
         existe = sugerirSiExiste(palabraCopiada, tablaHash, listaDeSugerencias);
-        
+
         if (!existe) {
             agregarPalabraALista(palabraCopiada, palabrasGeneradas);
         }
@@ -175,7 +175,7 @@ void generarSugerenciasSeparandoPalabra(Palabra palabra, TablaHash tablaHash, Li
 {
     Palabra * palabrasUnidas;
     ListaDePalabras * nuevasPalabras;
-    
+
     int primeraPalabraExiste, segundaPalabraExiste, fueAgregada;
 
     for (int i = 1; i < palabra.longitud; i++) {
@@ -225,7 +225,7 @@ int sugerirOLiberar(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * li
 }
 
 void imprimirSugerenciasEnArchivo(Palabra palabra, int linea, ListaDePalabras listaDeSugerencias, FILE * archivoDeCorrecciones)
-{    
+{
     fwprintf(archivoDeCorrecciones, L"Linea %d, \"%ls\" no esta en el diccionario.\n", linea, palabra.letras);
 
     if (listaDeSugerencias.cantidad) {

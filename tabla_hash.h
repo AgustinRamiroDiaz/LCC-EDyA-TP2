@@ -50,9 +50,10 @@ int calcularCantidadDeBuckets(int cantidadDePalabras);
 //Verifica todas las palabras del universo esten en la tabla hash
 int verificarTablaHash(TablaHash tablaHash, ListaDePalabras universo);
 
-
+//Retorna verdadero si la palabra esta en la tabla hash y falso si no
 int palabraEnTablaHash(TablaHash tablaHash, Palabra palabra);
 
+//Levanta la tabla hash desde el archivo
 TablaHash * cargarTablaHashDesdeArchivo(FILE * archivoDeTablaHash);
 
 #endif
