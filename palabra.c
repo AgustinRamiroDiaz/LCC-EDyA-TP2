@@ -29,7 +29,7 @@ Palabra * cargarPalabraDesdeArchivo(FILE * archivo)
 {
     wchar_t buffer[LARGO_MAXIMO_PALABRA];
 
-    if (1 == fwscanf(archivo, L"% ls ", buffer)){
+    if (1 == fwscanf(archivo, L"%ls", buffer)){
         return crearPalabra(buffer);
     }
 
