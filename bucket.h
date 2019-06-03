@@ -28,6 +28,7 @@ typedef struct {
     Palabra ** tablaHash;
 } Bucket;
 
+//Crea un bucket con todos los valores acordes a la lista de palabras
 Bucket * crearBucket(ListaDePalabras listaDePalabras);
 
 //Arma un bucket vacio con la memoria reservada para la cantidad de palabras
