@@ -82,9 +82,6 @@ int agregarPalabraAListaSiNoEstaRepetida(Palabra * palabra, ListaDePalabras * li
 //Concatena las listas de palabras sin repeticiones de palabras
 void concatenarListasDePalabrasSinRepetir(ListaDePalabras * destino, ListaDePalabras * origen);
 
-//Concatena las listas de palabras
-void concatenarListasDePalabras(ListaDePalabras * destino, ListaDePalabras * origen);
-
 //Retorna 1 si la palabra esta en lista y 0 si no
 int palabraEstaEnLista(Palabra palabra, ListaDePalabras listaDePalabras);
 
