@@ -78,7 +78,7 @@ void generarSugerenciasParaEliminaciones(ListaDePalabras * palabrasConEliminacio
             liberarListaDePalabras(nuevasPalabrasConEliminaciones);
         }
     }
-
+    
     while (listaDeSugerencias->cantidad > CANTIDAD_MINIMA_SUGERENCIAS) {
         eliminarUltimaPalabraDeLista(listaDeSugerencias);
     }
@@ -167,7 +167,9 @@ ListaDePalabras * generarSugerenciasEliminandoLetras(Palabra palabra, TablaHash 
         eliminarLetra(palabraCopiada, i);
         existe = sugerirSiExiste(palabraCopiada, tablaHash, listaDeSugerencias);
 
-        if (!existe) {
+        if (existe) {
+            liberarPalabra(palabraCopiada);
+        } else {
             agregarPalabraALista(palabraCopiada, palabrasGeneradas);
         }
     }
@@ -205,7 +207,7 @@ int sugerirSiExiste(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * li
 {
     int fueAgregada = 0, palabraExiste = palabraEnTablaHash(tablaHash, *palabra);
 
-    if (palabraExiste){
+    if (palabraExiste) {
         Palabra * palabraCopiada = copiarPalabra(*palabra);
 
         fueAgregada = agregarPalabraAListaSiNoEstaRepetida(palabraCopiada, listaDeSugerencias);
