@@ -24,21 +24,15 @@ ListaDePalabras * armarListaDePalabras(int cantidadDePalabras)
     return listaDePalabras;
 }
 
-void agregarPalabraALista(Palabra * palabra, ListaDePalabras * listaDePalabras)
+Palabra * cargarPalabraDesdeArchivo(FILE * archivo)
 {
-    if (listaDePalabras->cantidad == listaDePalabras->capacidad) {
-        agrandarListaDePalabras(listaDePalabras);
+    wchar_t buffer[LARGO_MAXIMO_PALABRA];
+
+    if (1 == fwscanf(archivo, L"% ls ", buffer)){
+        return crearPalabra(buffer);
     }
 
-    listaDePalabras->palabras[listaDePalabras->cantidad] = palabra;
-    listaDePalabras->cantidad++;
-}
-
-void agrandarListaDePalabras(ListaDePalabras * listaDePalabras)
-{
-    int nuevaCapacidad = listaDePalabras->capacidad * 2;
-    listaDePalabras->palabras = realloc(listaDePalabras->palabras, sizeof(Palabra) * nuevaCapacidad);
-    listaDePalabras->capacidad = nuevaCapacidad;
+    return NULL;
 }
 
 Palabra * crearPalabra(wchar_t * letras)
@@ -52,19 +46,59 @@ Palabra * crearPalabra(wchar_t * letras)
     return palabra;
 }
 
+void agregarPalabraALista(Palabra * palabra, ListaDePalabras * listaDePalabras)
+{
+    assert(palabra);
+
+    if (listaDePalabras->cantidad == listaDePalabras->capacidad) {
+        agrandarListaDePalabras(listaDePalabras);
+    }
+
+    listaDePalabras->palabras[listaDePalabras->cantidad] = palabra;
+    listaDePalabras->cantidad++;
+}
+
+void agrandarListaDePalabras(ListaDePalabras * listaDePalabras)
+{
+    listaDePalabras->palabras = realloc(listaDePalabras->palabras, sizeof(Palabra) * nuevaCapacidad);
+    listaDePalabras->capacidad *= FACTOR_AGRANDAR_CAPACIDAD_LISTA;
+}
+
+Palabra * copiarPalabra(Palabra palabra)
+{
+    return crearPalabra(palabra.letras);
+}
+
+void liberarListaDePalabras(ListaDePalabras * listaDePalabras)
+{
+    for (size_t i = 0; i < listaDePalabras->cantidad; i++) {
+        liberarPalabra(listaDePalabras->palabras[i]);
+    }
+    free(listaDePalabras->palabras);
+    free(listaDePalabras);
+}
+
+void liberarPalabra(Palabra * palabra)
+{
+    free(palabra->letras);
+    free(palabra);
+}
+
 int sonPalabrasIguales(Palabra primeraPalabra, Palabra segundaPalabra)
 {
     if (primeraPalabra.longitud != segundaPalabra.longitud) {
         return 0;
     }
 
-    return 0 == wcscmp(primeraPalabra.letras, segundaPalabra.letras);
+    return !wcscmp(primeraPalabra.letras, segundaPalabra.letras);
 }
 
 int sonPalabrasDistintas(Palabra primeraPalabra, Palabra segundaPalabra)
 {
     return !sonPalabrasIguales(primeraPalabra, segundaPalabra);
 }
+
+
 
 void intercambiarLetrasAdyacentes(Palabra * palabra, int posicion)
 {
@@ -91,11 +125,10 @@ void agregarLetra(Palabra * palabra, wchar_t letra, int posicion)
     palabra->longitud++;
     palabra->letras = realloc(palabra->letras, sizeof(wchar_t) * (palabra->longitud + 1));
 
-    for (int i = palabra->longitud; i > posicion; i--) {
-        palabra->letras[i] = palabra->letras[i-1];
+    for (size_t i = palabra->longitud; i > posicion; i--) {
+        palabra->letras[i] = palabra->letras[i - 1];
     }
     palabra->letras[posicion] = letra;
-
 }
 
 wchar_t eliminarLetra(Palabra * palabra, int posicion)
@@ -103,44 +136,14 @@ wchar_t eliminarLetra(Palabra * palabra, int posicion)
     wchar_t eliminada = palabra->letras[posicion];
 
     for (int i = posicion; i < palabra->longitud; i++) {
-        palabra->letras[i] = palabra->letras[i+1];
+        palabra->letras[i] = palabra->letras[i + 1];
     }
+    palabra->letras = realloc(palabra->letras, sizeof(wchar_t) * (palabra->longitud));
     palabra->longitud--;
-    palabra->letras = realloc(palabra->letras, sizeof(wchar_t) * (palabra->longitud + 1));
 
     return eliminada;
 }
 
-Palabra * cargarPalabraDesdeArchivo(FILE * archivo)
-{
-    wchar_t buffer[LARGO_MAXIMO_PALABRA];
-
-    if (1 == fwscanf(archivo, L" %ls ", buffer)){
-        return crearPalabra(buffer);
-    }
-
-    return NULL;
-}
-
-Palabra * copiarPalabra(Palabra palabra)
-{
-    return crearPalabra(palabra.letras);
-}
-
-void liberarListaDePalabras(ListaDePalabras * listaDePalabras)
-{
-    for (int i = 0; i < listaDePalabras->cantidad; i++) {
-        liberarPalabra(listaDePalabras->palabras[i]);
-    }
-    free(listaDePalabras->palabras);
-    free(listaDePalabras);
-}
-
-void liberarPalabra(Palabra * palabra)
-{
-    free(palabra->letras);
-    free(palabra);
-}
 
 ListaDePalabras * separarPalabra(Palabra palabra, int posicion)
 {
@@ -214,13 +217,6 @@ void concatenarListasDePalabrasSinRepetir(ListaDePalabras * destino, ListaDePala
         if (!palabraEstaEnLista(*origen->palabras[i], *destino)) {
             agregarPalabraALista(copiarPalabra(*origen->palabras[i]), destino);
         }
-    }
-}
-
-void concatenarListasDePalabras(ListaDePalabras * destino, ListaDePalabras * origen)
-{
-    for (int i = 0; i < origen->cantidad; i++) {
-        agregarPalabraALista(origen->palabras[i], destino);
     }
 }
 

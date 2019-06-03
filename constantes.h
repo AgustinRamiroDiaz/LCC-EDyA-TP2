@@ -11,11 +11,13 @@ static const float ELEMENTOS_POR_BUCKET = 4;
 
 //Tamano inicial de listaDePalabras
 static const int CAPACIDAD_INICIAL_LISTA = 1024;
+//Factor por el cual se multiplica la capacidad de la lista para realocarla
+static const int FACTOR_AGRANDAR_CAPACIDAD_LISTA = 2;
 static const int CANTIDAD_MINIMA_SUGERENCIAS = 5;
 static const int LARGO_MAXIMO_PALABRA = 500;
 
 static const wchar_t LETRAS_ESPECIALES[] = L"áéíóúäëïöüñ";
-static const wchar_t SIGNOS_ESPECIALEs[] = L" :;,.?!";
+static const wchar_t SIGNOS_ESPECIALES[] = L" :;,.?!";
 static const wchar_t SALTOS_DE_LINEA[] = L"\n\r";
 
 
