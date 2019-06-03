@@ -99,8 +99,6 @@ int sonPalabrasDistintas(Palabra primeraPalabra, Palabra segundaPalabra)
     return !sonPalabrasIguales(primeraPalabra, segundaPalabra);
 }
 
-
-
 void intercambiarLetrasAdyacentes(Palabra * palabra, int posicion)
 {
     intercambiarLetras(palabra, posicion, posicion + 1);
@@ -126,7 +124,7 @@ void agregarLetra(Palabra * palabra, wchar_t letra, int posicion)
     palabra->longitud++;
     palabra->letras = realloc(palabra->letras, sizeof(wchar_t) * (palabra->longitud + 1));
 
-    for (size_t i = palabra->longitud; i > posicion; i--) {
+    for (int i = palabra->longitud; i > posicion; i--) {
         palabra->letras[i] = palabra->letras[i - 1];
     }
     palabra->letras[posicion] = letra;
@@ -139,8 +137,8 @@ wchar_t eliminarLetra(Palabra * palabra, int posicion)
     for (int i = posicion; i < palabra->longitud; i++) {
         palabra->letras[i] = palabra->letras[i + 1];
     }
-    palabra->letras = realloc(palabra->letras, sizeof(wchar_t) * (palabra->longitud));
     palabra->longitud--;
+    palabra->letras = realloc(palabra->letras, sizeof(wchar_t) * (palabra->longitud + 1));
 
     return eliminada;
 }
