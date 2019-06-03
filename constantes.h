@@ -17,6 +17,7 @@ static const int CANTIDAD_MINIMA_SUGERENCIAS = 5;
 static const int LARGO_MAXIMO_PALABRA = 500;
 
 static const wchar_t LETRAS_ESPECIALES[] = L"áéíóúäëïöüñ";
+static const wchar_t LETRAS_POSIBLES[] = L"abcdefghijklmopqrstuvwxyzáéíóúäëïöüñ";
 static const wchar_t SIGNOS_ESPECIALES[] = L" :;,.?!";
 static const wchar_t SALTOS_DE_LINEA[] = L"\n\r";
 

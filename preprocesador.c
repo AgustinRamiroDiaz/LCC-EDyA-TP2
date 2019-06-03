@@ -20,6 +20,8 @@ FILE * obtenerArchivoDeUniverso(int argc, char const *argv[])
 int main(int argc, char const *argv[])
 {
     setlocale(LC_ALL, "");
+    fwide(stdout, 1);
+    fwide(stdin, 1);
 
     FILE * archivoDeUniverso = obtenerArchivoDeUniverso(argc, argv);
     FILE * archivoDeTablaHash = abrirArchivo((char *) ARCHIVO_TABLA_HASH, "w");

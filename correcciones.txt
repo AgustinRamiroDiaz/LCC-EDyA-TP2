@@ -1,32 +1,4 @@
-Linea 1, "Este" no esta en el diccionario.
+Linea 1, "aaronico" no esta en el diccionario.
 Quizas quiso decir:
-este, oste, uste, éste, set
-
-Linea 1, "tiene" no esta en el diccionario.
-Quizas quiso decir:
-tizne, ti ene, lene, nene, pene
-
-Linea 1, "errores" no esta en el diccionario.
-Quizas quiso decir:
-erro res, ero res, error s, error, erro re
-
-Linea 1, "es" no esta en el diccionario.
-Quizas quiso decir:
-se, as, ea, eh, el, en, os, et, ex, e s, s, e
-
-Linea 2, "Guimpel" no esta en el diccionario.
-Quizas quiso decir:
-miel, piel, ipil, ámel, fiel
-
-Linea 3, "aaaaaaaaaaaa" no esta en el diccionario.
-Quizas quiso decir:
-aba, aca, aja, ala, ama
-
-Linea 4, "Chau" no esta en el diccionario.
-Quizas quiso decir:
-chau, jau, hao, tau, wau
-
-Linea 5, "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz" no esta en el diccionario.
-Quizas quiso decir:
-za, z z, z, b, c
+bonico, ronco, asnico, aonio, azoico
 
