@@ -81,8 +81,13 @@ int calcularCantidadDeBuckets(int cantidadDePalabras)
 
 int verificarTablaHash(TablaHash tablaHash, ListaDePalabras universo)
 {
-    int numeroDeBucket
-    int esValida = (tablaHash->cantidadDeElementos == universo->cantidad);
+    int numeroDeBucket, esValida;
+    if (tablaHash.cantidadDeElementos == universo.cantidad){
+        esValida = 1;
+    } else{
+        esValida = 0;
+    }
+
     Palabra * palabraActual;
 
     for (int i = 0; i < universo.cantidad && esValida; i++) {

@@ -1,4 +1,6 @@
-main.exe
+*.exe
 tabla-hash.txt
 tabla-hash2.txt
+preprocesador
+corrector
 .vscode*
