@@ -13,6 +13,7 @@ TablaHash * crearTablaHash(ListaDePalabras * universo)
     ListaDePalabras ** gruposDePalabras = agruparPalabras(tablaHash, universo);
 
     crearBuckets(tablaHash, gruposDePalabras);
+    liberarGruposDePalabras(gruposDePalabras, tablaHash->tamano);
 
     return tablaHash;
 }
@@ -135,4 +136,13 @@ void liberarTablaHash(TablaHash * tablaHash)
     }
     free(tablaHash->buckets);
     free(tablaHash);
+}
+
+void liberarGruposDePalabras(ListaDePalabras ** gruposDePalabras, int cantidad)
+{
+    for (int i = 0; i < cantidad; i++) {
+        free(gruposDePalabras[i]->palabras);
+        free(gruposDePalabras[i]);
+    }
+    free(gruposDePalabras);
 }

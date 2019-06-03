@@ -132,6 +132,7 @@ void liberarListaDePalabras(ListaDePalabras * listaDePalabras)
     for (int i = 0; i < listaDePalabras->cantidad; i++) {
         liberarPalabra(listaDePalabras->palabras[i]);
     }
+    free(listaDePalabras->palabras);
     free(listaDePalabras);
 }
 

@@ -58,4 +58,6 @@ TablaHash * cargarTablaHashDesdeArchivo(FILE * archivoDeTablaHash);
 
 void liberarTablaHash(TablaHash * tablaHash);
 
+void liberarGruposDePalabras(ListaDePalabras ** gruposDePalabras, int cantidad);
+
 #endif

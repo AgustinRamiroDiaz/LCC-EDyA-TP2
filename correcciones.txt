@@ -26,3 +26,7 @@ Linea 4, "Chau" no esta en el diccionario.
 Quizas quiso decir:
 chau, jau, hao, tau, wau
 
+Linea 5, "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz" no esta en el diccionario.
+Quizas quiso decir:
+za, z z, z, b, c
+
