@@ -68,6 +68,9 @@ Bucket * cargarBucketDesdeArchivo(FILE * archivo);
 //Guarda las palabras del archivo en la tabla hash del bucket
 void cargarPalabrasEnBucketDesdeArchivo(Bucket * bucket, FILE * archivo);
 
+//Libera la memoria reservada de las palanras del bucket
+void liberarPalabrasEnBucket(Bucket * bucket);
+
 //Libera la memoria reservada del bucket
 void liberarBucket(Bucket * bucket);
 

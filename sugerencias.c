@@ -12,36 +12,37 @@ void corregirArchivo(FILE * archivoDeEntrada, FILE * archivoDeCorrecciones, Tabl
 
     while (!finDeArchivo) {
         caracter = fgetwc(archivoDeEntrada);
+
         if (esLetra(caracter)) {
             buffer[longitudDePalabra] = caracter;
             longitudDePalabra++;
-        } else if (longitudDePalabra && esFinDePalabra(caracter)) {
-            buffer[longitudDePalabra] = L'\0';
-            palabraLeida = crearPalabra(buffer);
-            verificarPalabra(buffer, tablaHash, numeroDeLinea, archivoDeCorrecciones);
+        } else {
+            if (longitudDePalabra && esFinDePalabra(caracter)) {
+                buffer[longitudDePalabra] = L'\0';
 
-            longitudDePalabra = 0;
-        }
+                palabraLeida = crearPalabra(buffer);
+                verificarPalabra(palabraLeida, tablaHash, numeroDeLinea, archivoDeCorrecciones);
+                liberarPalabra(palabraLeida);
 
-        if (esFinDeLinea(caracter)) {
-            numeroDeLinea++;
+                longitudDePalabra = 0;
+            }
+
+            if (esFinDeLinea(caracter)) {
+                numeroDeLinea++;
+            }
         }
 
         finDeArchivo = esFinDeArchivo(caracter);
     }
 }
 
-void verificarPalabra(wchar_t * letrasLeidas, TablaHash tablaHash, int numeroDeLinea, FILE * archivoDeCorrecciones)
+void verificarPalabra(Palabra * palabra, TablaHash tablaHash, int numeroDeLinea, FILE * archivoDeCorrecciones)
 {
-    Palabra * palabra = crearPalabra(letrasLeidas);
-
     if (!palabraEnTablaHash(tablaHash, *palabra)) {
         ListaDePalabras * listaDeSugerencias = generarSugerencias(*palabra, tablaHash);
         imprimirSugerenciasEnArchivo(*palabra, numeroDeLinea, *listaDeSugerencias, archivoDeCorrecciones);
         liberarListaDePalabras(listaDeSugerencias);
     }
-
-    liberarPalabra(palabra);
 }
 
 ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash)
@@ -74,13 +75,13 @@ void generarSugerenciasParaEliminaciones(ListaDePalabras * palabrasConEliminacio
             nuevasPalabrasConEliminaciones = generarSugerenciasEliminandoLetras(*palabraActual, tablaHash, listaDeSugerencias);
             cantidadDePalabras += nuevasPalabrasConEliminaciones->cantidad;
             concatenarListasDePalabrasSinRepetir(palabrasConEliminaciones, nuevasPalabrasConEliminaciones);
+            liberarListaDePalabras(nuevasPalabrasConEliminaciones);
         }
     }
 
     while (listaDeSugerencias->cantidad > CANTIDAD_MINIMA_SUGERENCIAS) {
         eliminarUltimaPalabraDeLista(listaDeSugerencias);
     }
-    liberarListaDePalabras(nuevasPalabrasConEliminaciones);
 }
 
 void generarSugerenciasModificandoPalabra(Palabra palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
@@ -125,10 +126,10 @@ void generarSugerenciasAgregandoLetras(Palabra palabra, TablaHash tablaHash, Lis
         agregarLetra(palabraCopiada, LETRAS_ESPECIALES[i], 0);
 
         for (int pos = 0; pos < palabra.longitud - 1; pos++) {
-            palabraCopiada = copiarPalabra(palabra);
             intercambiarLetrasAdyacentes(palabraCopiada, pos);
             sugerirSiExiste(palabraCopiada, tablaHash, listaDeSugerencias);
         }
+        liberarPalabra(palabraCopiada);
     }
 }
 
@@ -140,7 +141,7 @@ void generarSugerenciasReemplazandoLetras(Palabra palabra, TablaHash tablaHash, 
         for (int pos = 0; pos < palabra.longitud; pos++) {
             palabraCopiada = copiarPalabra(palabra);
             reemplazarLetra(palabraCopiada, caracter, pos);
-            sugerirOLiberar(palabraCopiada, tablaHash, listaDeSugerencias);
+            sugerirYLiberar(palabraCopiada, tablaHash, listaDeSugerencias);
         }
     }
 
@@ -150,7 +151,7 @@ void generarSugerenciasReemplazandoLetras(Palabra palabra, TablaHash tablaHash, 
         for (int pos = 0; pos < palabra.longitud; pos++) {
             palabraCopiada = copiarPalabra(palabra);
             reemplazarLetra(palabraCopiada, LETRAS_ESPECIALES[i], pos);
-            sugerirOLiberar(palabraCopiada, tablaHash, listaDeSugerencias);
+            sugerirYLiberar(palabraCopiada, tablaHash, listaDeSugerencias);
         }
     }
 }
@@ -203,9 +204,10 @@ void generarSugerenciasSeparandoPalabra(Palabra palabra, TablaHash tablaHash, Li
 int sugerirSiExiste(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
 {
     int fueAgregada = 0, palabraExiste = palabraEnTablaHash(tablaHash, *palabra);
-    Palabra * palabraCopiada = copiarPalabra(*palabra);
 
     if (palabraExiste){
+        Palabra * palabraCopiada = copiarPalabra(*palabra);
+
         fueAgregada = agregarPalabraAListaSiNoEstaRepetida(palabraCopiada, listaDeSugerencias);
 
         if (!fueAgregada) {
@@ -216,13 +218,10 @@ int sugerirSiExiste(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * li
     return fueAgregada;
 }
 
-int sugerirOLiberar(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
+int sugerirYLiberar(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
 {
     int palabraFueSugerida = sugerirSiExiste(palabra, tablaHash, listaDeSugerencias);
-
-    if (!palabraFueSugerida) {
-        liberarPalabra(palabra);
-    }
+    liberarPalabra(palabra);
 
     return palabraFueSugerida;
 }

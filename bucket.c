@@ -115,6 +115,19 @@ void cargarPalabrasEnBucketDesdeArchivo(Bucket * bucket, FILE * archivo)
     }
 }
 
+void liberarPalabrasEnBucket(Bucket * bucket)
+{
+    Palabra * palabraActual;
+
+    for (int i = 0; i < bucket->capacidad; i++) {
+        palabraActual = bucket->tablaHash[i];
+
+        if (NULL != palabraActual) {
+            liberarPalabra(palabraActual);
+        }
+    }
+}
+
 void liberarBucket(Bucket * bucket)
 {
     free(bucket->tablaHash);

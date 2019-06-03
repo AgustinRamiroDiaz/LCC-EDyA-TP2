@@ -128,6 +128,13 @@ TablaHash * cargarTablaHashDesdeArchivo(FILE * archivoDeTablaHash)
     return tablaHash;
 }
 
+void liberarTablaHashYPalabras(TablaHash * tablaHash)
+{
+    for (int i = 0; i < tablaHash->tamano; i++) {
+        liberarPalabrasEnBucket(tablaHash->buckets[i]);
+    }
+    liberarTablaHash(tablaHash);
+}
 
 void liberarTablaHash(TablaHash * tablaHash)
 {

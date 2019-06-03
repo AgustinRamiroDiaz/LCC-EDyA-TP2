@@ -5,7 +5,7 @@
 
 void corregirArchivo(FILE * archivoDeEntrada, FILE * archivoDeCorrecciones, TablaHash tablaHash);
 
-void verificarPalabra(wchar_t * letrasLeidas, TablaHash tablaHash, int numeroDeLinea, FILE * archivoDeCorrecciones);
+void verificarPalabra(Palabra * palabra, TablaHash tablaHash, int numeroDeLinea, FILE * archivoDeCorrecciones);
 
 ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash);
 
@@ -25,7 +25,7 @@ void generarSugerenciasSeparandoPalabra(Palabra palabra, TablaHash tablaHash, Li
 
 int sugerirSiExiste(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias);
 
-int sugerirOLiberar(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias);
+int sugerirYLiberar(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias);
 
 void imprimirSugerenciasEnArchivo(Palabra palabra, int linea, ListaDePalabras listaDeSugerencias, FILE * archivoDeCorrecciones);
 

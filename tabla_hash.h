@@ -57,8 +57,14 @@ int palabraEnTablaHash(TablaHash tablaHash, Palabra palabra);
 TablaHash * cargarTablaHashDesdeArchivo(FILE * archivoDeTablaHash);
 
 //Libera la memoria reservada por la tabla hash
+//y todas las palabras que contiene
+void liberarTablaHashYPalabras(TablaHash * tablaHash);
+
+//Libera la memoria reservada por la tabla hash
 void liberarTablaHash(TablaHash * tablaHash);
 
+//Libera la memoria reservada por los grupos de palabras con 
+//los que se crean los buckets
 void liberarGruposDePalabras(ListaDePalabras ** gruposDePalabras, int cantidad);
 
 #endif

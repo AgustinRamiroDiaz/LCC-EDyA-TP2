@@ -44,7 +44,7 @@ int main(int argc, char const *argv[])
 
     corregirArchivo(archivoDeEntrada, archivoDeCorrecciones, *tablaHash);
 
-    liberarTablaHash(tablaHash);
+    liberarTablaHashYPalabras(tablaHash);
     cerrarArchivo(archivoDeTablaHash);
     cerrarArchivo(archivoDeEntrada);
     cerrarArchivo(archivoDeCorrecciones);
