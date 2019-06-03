@@ -4,21 +4,21 @@
 #include <stdio.h>
 #include <wchar.h>
 
-void corregirArchivo(FILE * archivo, TablaHash tablaHash)
+void corregirArchivo(FILE * archivoDeEntrada, FILE * archivoDeCorrecciones, TablaHash tablaHash)
 {
     Palabra * palabraLeida;
     wchar_t caracter, buffer[LARGO_MAXIMO_PALABRA];
     int longitudDePalabra = 0, numeroDeLinea = 1, finDeArchivo = 0;
 
     while (!finDeArchivo) {
-        caracter = fgetwc(archivo);
+        caracter = fgetwc(archivoDeEntrada);
         if (esLetra(caracter)) {
             buffer[longitudDePalabra] = caracter;
             longitudDePalabra++;
         } else if (longitudDePalabra && esFinDePalabra(caracter)) {
             buffer[longitudDePalabra] = L'\0';
             palabraLeida = crearPalabra(buffer);
-            verificarPalabra(buffer, tablaHash, numeroDeLinea);
+            verificarPalabra(buffer, tablaHash, numeroDeLinea, archivoDeCorrecciones);
 
             longitudDePalabra = 0;
         }
@@ -31,14 +31,17 @@ void corregirArchivo(FILE * archivo, TablaHash tablaHash)
     }
 }
 
-void verificarPalabra(wchar_t * letrasLeidas, TablaHash tablaHash, int numeroDeLinea)
+void verificarPalabra(wchar_t * letrasLeidas, TablaHash tablaHash, int numeroDeLinea, FILE * archivoDeCorrecciones)
 {
     Palabra * palabra = crearPalabra(letrasLeidas);
 
     if (!palabraEnTablaHash(tablaHash, *palabra)) {
         ListaDePalabras * listaDeSugerencias = generarSugerencias(*palabra, tablaHash);
-        imprimirSugerencias(*palabra, numeroDeLinea, *listaDeSugerencias);
+        imprimirSugerenciasEnArchivo(*palabra, numeroDeLinea, *listaDeSugerencias, archivoDeCorrecciones);
+        liberarListaDePalabras(listaDeSugerencias);
     }
+    
+    liberarPalabra(palabra);
 }
 
 ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash)
@@ -84,13 +87,15 @@ void generarSugerenciasModificandoPalabra(Palabra palabra, TablaHash tablaHash, 
 
 void generarSugerenciasIntercambiandoLetras(Palabra palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
 {
-    Palabra * palabraCopiada;
+    Palabra * palabraCopiada = copiarPalabra(palabra);
 
     for (int pos = 0; pos < palabra.longitud - 1; pos++) {
-        palabraCopiada = copiarPalabra(palabra);
         intercambiarLetras(palabraCopiada, pos, pos + 1);
-        sugerirOLiberar(palabraCopiada, tablaHash, listaDeSugerencias);
+        sugerirSiExiste(palabraCopiada, tablaHash, listaDeSugerencias);
+        intercambiarLetras(palabraCopiada, pos, pos + 1);
     }
+
+    liberarPalabra(palabraCopiada);
 }
 
 void generarSugerenciasAgregandoLetras(Palabra palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
@@ -98,21 +103,26 @@ void generarSugerenciasAgregandoLetras(Palabra palabra, TablaHash tablaHash, Lis
     Palabra * palabraCopiada;
 
     for (wchar_t caracter = L'a'; caracter <= L'z'; caracter++) {
+        palabraCopiada = copiarPalabra(palabra);
+        agregarLetra(palabraCopiada, caracter, 0);
+
         for (int pos = 0; pos < palabra.longitud - 1; pos++) {
-            palabraCopiada = copiarPalabra(palabra);
-            agregarLetra(palabraCopiada, caracter, 0);
-            sugerirOLiberar(palabraCopiada, tablaHash, listaDeSugerencias);
+            intercambiarLetras(palabraCopiada, pos, pos + 1);
+            sugerirSiExiste(palabraCopiada, tablaHash, listaDeSugerencias);
         }
+        liberarPalabra(palabraCopiada);
     }
 
     int cantidadDeLetras = wcslen(LETRAS_ESPECIALES);
 
     for (int i = 0; i < cantidadDeLetras; i++) {
-    
+        palabraCopiada = copiarPalabra(palabra);
+        agregarLetra(palabraCopiada, LETRAS_ESPECIALES[i], 0);
+
         for (int pos = 0; pos < palabra.longitud - 1; pos++) {
             palabraCopiada = copiarPalabra(palabra);
-            agregarLetra(palabraCopiada, LETRAS_ESPECIALES[i], 0);
-            sugerirOLiberar(palabraCopiada, tablaHash, listaDeSugerencias);
+            intercambiarLetras(palabraCopiada, pos, pos + 1);
+            sugerirSiExiste(palabraCopiada, tablaHash, listaDeSugerencias);
         }
     }
 }
@@ -188,9 +198,14 @@ void generarSugerenciasSeparandoPalabra(Palabra palabra, TablaHash tablaHash, Li
 int sugerirSiExiste(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
 {
     int fueAgregada = 0, palabraExiste = palabraEnTablaHash(tablaHash, *palabra);
+    Palabra * palabraCopiada = copiarPalabra(*palabra);
 
     if (palabraExiste){
-        fueAgregada = agregarPalabraAListaSiNoEstaRepetida(palabra, listaDeSugerencias);
+        fueAgregada = agregarPalabraAListaSiNoEstaRepetida(palabraCopiada, listaDeSugerencias);
+
+        if (!fueAgregada) {
+            liberarPalabra(palabraCopiada);
+        }
     }
 
     return fueAgregada;
@@ -199,6 +214,7 @@ int sugerirSiExiste(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * li
 int sugerirOLiberar(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
 {
     int palabraFueSugerida = sugerirSiExiste(palabra, tablaHash, listaDeSugerencias);
+
     if (!palabraFueSugerida) {
         liberarPalabra(palabra);
     }
@@ -206,15 +222,20 @@ int sugerirOLiberar(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * li
     return palabraFueSugerida;
 }
 
-void imprimirSugerencias(Palabra palabra, int linea, ListaDePalabras listaDeSugerencias)
+void imprimirSugerenciasEnArchivo(Palabra palabra, int linea, ListaDePalabras listaDeSugerencias, FILE * archivoDeCorrecciones)
 {    
-    wprintf(L"Linea %d, \"%ls\" no esta en el diccionario.\n", linea, palabra.letras);
-    
+    fwprintf(archivoDeCorrecciones, L"Linea %d, \"%ls\" no esta en el diccionario.\n", linea, palabra.letras);
+
     if (listaDeSugerencias.cantidad) {
-        Palabra * sugerencias = unirPalabrasEnLista(listaDeSugerencias, L", ");
-        wprintf(L"Quizas quiso decir:\n%ls", sugerencias->letras);
+        fwprintf(archivoDeCorrecciones, L"Quizas quiso decir:\n");
+        for (int i = 0; i < listaDeSugerencias.cantidad; i++) {
+            if (i) {
+                fwprintf(archivoDeCorrecciones, L", ");
+            }
+            fwprintf(archivoDeCorrecciones, L"%ls", listaDeSugerencias.palabras[i]->letras);
+        }
     } else {
-        wprintf(L"No se encontraron sugerencias.");
+        fwprintf(archivoDeCorrecciones, L"No se encontraron sugerencias.");
     }
     wprintf(L"\n\n");
 }

@@ -19,7 +19,7 @@ ListaDePalabras ** agruparPalabras(TablaHash * tablaHash, ListaDePalabras * pala
 
 ListaDePalabras ** crearGruposDePalabras(TablaHash * tablaHash, ListaDePalabras * palabras);
 
-void imprimirTablaHashEnArchivo(TablaHash tablaHash, char * nombreDeArchivo);
+void imprimirTablaHashEnArchivo(TablaHash tablaHash, FILE * archivoDeTablaHash);
 
 int obtenerHashPrincipal(TablaHash tablaHash, Palabra palabra);
 
@@ -29,6 +29,6 @@ int verificarTablaHash(TablaHash tablaHash, ListaDePalabras universo);
 
 int palabraEnTablaHash(TablaHash tablaHash, Palabra palabra);
 
-TablaHash * cargarTablaHashDesdeArchivo(char * nombreDeArchivo);
+TablaHash * cargarTablaHashDesdeArchivo(FILE * archivoDeTablaHash);
 
 #endif
