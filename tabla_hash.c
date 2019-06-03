@@ -63,16 +63,12 @@ ListaDePalabras ** crearGruposDePalabras(TablaHash * tablaHash, ListaDePalabras 
     return gruposDePalabras;
 }
 
-void imprimirTablaHashEnArchivo(TablaHash tablaHash, char * nombreDeArchivo)
+void imprimirTablaHashEnArchivo(TablaHash tablaHash, FILE * archivoDeTablaHash)
 {
-    FILE * archivo = abrirArchivo(nombreDeArchivo, "w");
-
-    fwprintf(archivo, L"%d %d\n", tablaHash.cantidadDeElementos, tablaHash.tamano);
+    fwprintf(archivoDeTablaHash, L"%d %d\n", tablaHash.cantidadDeElementos, tablaHash.tamano);
     for (int i = 0; i < tablaHash.tamano; i++) {
-        imprimirBucketEnArchivo(*tablaHash.buckets[i], archivo);
+        imprimirBucketEnArchivo(*tablaHash.buckets[i], archivoDeTablaHash);
     }
-
-    cerrarArchivo(archivo);
 }
 
 int obtenerHashPrincipal(TablaHash tablaHash, Palabra palabra)
@@ -113,19 +109,16 @@ int palabraEnTablaHash(TablaHash tablaHash, Palabra palabra)
     return sonPalabrasIguales(palabra, *palabraEncontrada);
 }
 
-TablaHash * cargarTablaHashDesdeArchivo(char * nombreDeArchivo)
+TablaHash * cargarTablaHashDesdeArchivo(FILE * archivoDeTablaHash)
 {
     int cantidadDeElementos, cantidadDeBuckets;
 
-    FILE * archivo = abrirArchivo(nombreDeArchivo, "r");
-    fwscanf(archivo, L"%d %d", &cantidadDeElementos ,&cantidadDeBuckets);
+    fwscanf(archivoDeTablaHash, L"%d %d", &cantidadDeElementos ,&cantidadDeBuckets);
     TablaHash * tablaHash = armarTablaHash(cantidadDeElementos);
 
     for (int i = 0; i < tablaHash->tamano; i++) {
-        tablaHash->buckets[i] = cargarBucketDesdeArchivo(archivo);
+        tablaHash->buckets[i] = cargarBucketDesdeArchivo(archivoDeTablaHash);
     }
-
-    cerrarArchivo(archivo);
 
     return tablaHash;
 }

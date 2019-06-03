@@ -37,11 +37,10 @@ int esLetraEspecial(wchar_t caracter)
 
 int esFinDePalabra(wchar_t caracter)
 {
-    int encontrado = 0;
-    wchar_t caracteresPosibles[7] = L" :;,.?!";
+    int encontrado = 0, cantidadDeCaracteres = wcslen(SIGNOS_ESPECIALEs);
 
-    for (int i = 0; i < 6 && !encontrado; i++) {
-        encontrado = (caracter == caracteresPosibles[i]);
+    for (int i = 0; i < cantidadDeCaracteres && !encontrado; i++) {
+        encontrado = (caracter == SIGNOS_ESPECIALEs[i]);
     }
 
     return (encontrado || esFinDeLinea(caracter));
@@ -49,11 +48,10 @@ int esFinDePalabra(wchar_t caracter)
 
 int esFinDeLinea(wchar_t caracter)
 {
-    int encontrado = 0;
-    wchar_t caracteresPosibles[2] = {L'\n', L'\r'};
+    int encontrado = 0, cantidadDeCaracteres = wcslen(SALTOS_DE_LINEA);
 
-    for (int i = 0; i < 2 && !encontrado; i++) {
-        encontrado = (caracter == caracteresPosibles[i]);
+    for (int i = 0; i < cantidadDeCaracteres && !encontrado; i++) {
+        encontrado = (caracter == SALTOS_DE_LINEA[i]);
     }
 
     return (encontrado || esFinDeArchivo(caracter));

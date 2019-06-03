@@ -1,0 +1,41 @@
+#include <locale.h>
+#include "archivo.h"
+#include "tabla_hash.h"
+#include "constantes.h"
+
+FILE * obtenerArchivoDeUniverso(int argc, char const *argv[])
+{
+    char * nombreArchivoDeUniverso;
+
+    if (argc > 0) {
+        nombreArchivoDeUniverso = argv[0];
+    } else {
+        nombreArchivoDeUniverso = ARCHIVO_UNIVERSO_DEFECTO;
+    }
+    FILE * archivoDeUniverso = abrirArchivo(nombreArchivoDeUniverso, "r");
+
+    return archivoDeUniverso;
+}
+
+int main(int argc, char const *argv[])
+{
+    setlocale(LC_ALL, "");
+
+    FILE * archivoDeUniverso = obtenerArchivoDeUniverso(argc, argv);
+    FILE * archivoDeTablaHash = abrirArchivo(ARCHIVO_TABLA_HASH, "w");
+
+    ListaDePalabras * universo = crearListaDePalabrasDesdeArchivo(archivoDeUniverso);
+    TablaHash * tablaHash = crearTablaHash(universo);
+
+    if (verificarTablaHash(*tablaHash, *universo)) {
+        imprimirTablaHashEnArchivo(*tablaHash, archivoDeTablaHash);
+        wprintf(L"Se generó la tabla hash\n");
+    } else {
+        wprintf(L"No se pudo hashear el universo\n");
+    }
+
+    cerrarArchivo(archivoDeUniverso);
+    cerrarArchivo(archivoDeTablaHash);
+
+    return 0;
+}

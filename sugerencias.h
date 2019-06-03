@@ -3,9 +3,9 @@
 
 #include "tabla_hash.h"
 
-void corregirArchivo(FILE * archivo, TablaHash tablaHash);
+void corregirArchivo(FILE * archivoDeEntrada, FILE * archivoDeCorrecciones, TablaHash tablaHash);
 
-void verificarPalabra(wchar_t * letrasLeidas, TablaHash tablaHash, int numeroDeLinea);
+void verificarPalabra(wchar_t * letrasLeidas, TablaHash tablaHash, int numeroDeLinea, FILE * archivoDeCorrecciones);
 
 ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash);
 
@@ -27,6 +27,6 @@ int sugerirSiExiste(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * li
 
 int sugerirOLiberar(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias);
 
-void imprimirSugerencias(Palabra palabra, int linea, ListaDePalabras listaDeSugerencias);
+void imprimirSugerenciasEnArchivo(Palabra palabra, int linea, ListaDePalabras listaDeSugerencias, FILE * archivoDeCorrecciones);
 
 #endif
