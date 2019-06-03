@@ -114,3 +114,9 @@ void cargarPalabrasEnBucketDesdeArchivo(Bucket * bucket, FILE * archivo)
         bucket->tablaHash[posicionEnBucket] = cargarPalabraDesdeArchivo(archivo);
     }
 }
+
+void liberarBucket(Bucket * bucket)
+{
+    free(bucket->tablaHash);
+    free(bucket);
+}

@@ -235,3 +235,10 @@ int palabraEstaEnLista(Palabra palabra, ListaDePalabras listaDePalabras)
 
     return encontrada;
 }
+
+void eliminarUltimaPalabraDeLista(ListaDePalabras * listaDePalabras)
+{
+    int posicionABorrar = listaDePalabras->cantidad - 1;
+    liberarPalabra(listaDePalabras->palabras[posicionABorrar]);
+    listaDePalabras->cantidad--;
+}

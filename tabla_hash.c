@@ -51,7 +51,7 @@ ListaDePalabras ** agruparPalabras(TablaHash * tablaHash, ListaDePalabras * list
 
 ListaDePalabras ** crearGruposDePalabras(TablaHash * tablaHash, ListaDePalabras * palabras)
 {
-    int elementosPorBucket = palabras->cantidad / tablaHash->tamano + 1;
+    int elementosPorBucket = ceil((float) palabras->cantidad / (float) tablaHash->tamano);
     ListaDePalabras ** gruposDePalabras = malloc(sizeof(ListaDePalabras*) * tablaHash->tamano);
 
     for (int i=0; i < tablaHash->tamano; i++) {
@@ -76,7 +76,7 @@ int obtenerHashPrincipal(TablaHash tablaHash, Palabra palabra)
 
 int calcularCantidadDeBuckets(int cantidadDePalabras)
 {
-    return cantidadDePalabras / ELEMENTOS_POR_BUCKET + 1;
+    return ceil((float) cantidadDePalabras / (float) ELEMENTOS_POR_BUCKET);
 }
 
 int verificarTablaHash(TablaHash tablaHash, ListaDePalabras universo)
@@ -119,4 +119,14 @@ TablaHash * cargarTablaHashDesdeArchivo(FILE * archivoDeTablaHash)
     }
 
     return tablaHash;
+}
+
+
+void liberarTablaHash(TablaHash * tablaHash)
+{
+    for (int i = 0; i < tablaHash->tamano; i++) {
+        liberarBucket(tablaHash->buckets[i]);
+    }
+    free(tablaHash->buckets);
+    free(tablaHash);
 }

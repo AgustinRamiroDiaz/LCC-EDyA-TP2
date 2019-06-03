@@ -88,4 +88,7 @@ void concatenarListasDePalabras(ListaDePalabras * destino, ListaDePalabras * ori
 //Retorna 1 si la palabra esta en lista y 0 si no
 int palabraEstaEnLista(Palabra palabra, ListaDePalabras listaDePalabras);
 
+//Elimina la ultima palabra de la lista
+void eliminarUltimaPalabraDeLista(ListaDePalabras * listaDePalabras);
+
 #endif

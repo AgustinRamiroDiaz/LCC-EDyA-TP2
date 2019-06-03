@@ -77,6 +77,9 @@ void generarSugerenciasParaEliminaciones(ListaDePalabras * palabrasConEliminacio
         }
     }
 
+    while (listaDeSugerencias->cantidad > CANTIDAD_MINIMA_SUGERENCIAS) {
+        eliminarUltimaPalabraDeLista(listaDeSugerencias);
+    }
     liberarListaDePalabras(nuevasPalabrasConEliminaciones);
 }
 

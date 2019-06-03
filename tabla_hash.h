@@ -31,4 +31,6 @@ int palabraEnTablaHash(TablaHash tablaHash, Palabra palabra);
 
 TablaHash * cargarTablaHashDesdeArchivo(FILE * archivoDeTablaHash);
 
+void liberarTablaHash(TablaHash * tablaHash);
+
 #endif
