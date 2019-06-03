@@ -5,10 +5,10 @@
 
 FILE * obtenerArchivoDeUniverso(int argc, char const *argv[])
 {
-    char * nombreArchivoDeUniverso;
+    char const * nombreArchivoDeUniverso;
 
-    if (argc > 0) {
-        nombreArchivoDeUniverso = argv[0];
+    if (argc > 1) {
+        nombreArchivoDeUniverso = argv[1];
     } else {
         nombreArchivoDeUniverso = ARCHIVO_UNIVERSO_DEFECTO;
     }

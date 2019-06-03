@@ -8,8 +8,8 @@ FILE * obtenerArchivoDeEntrada(int argc, char const *argv[])
 {
     char * nombreArchivoDeEntrada;
 
-    if (argc > 0) {
-        nombreArchivoDeEntrada = argv[0];
+    if (argc > 1) {
+        nombreArchivoDeEntrada = argv[1];
     } else {
         nombreArchivoDeEntrada = ARCHIVO_TEXTO_ENTRADA_POR_DEFECTO;
     }
@@ -22,8 +22,8 @@ FILE * obtenerArchivoDeCorrecciones(int argc, char const *argv[])
 {
     char * nombreArchivoDeCorrecciones;
 
-    if (argc > 1) {
-        nombreArchivoDeCorrecciones = argv[1];
+    if (argc > 2) {
+        nombreArchivoDeCorrecciones = argv[2];
     } else {
         nombreArchivoDeCorrecciones = ARCHIVO_CORRECCIONES_POR_DEFECTO;
     }

@@ -29,8 +29,6 @@ TablaHash * armarTablaHash(int cantidadDePalabras)
 
 void crearBuckets(TablaHash * tablaHash, ListaDePalabras ** gruposDePalabras)
 {
-    printf("Tamano tablaHash: %d\n\n", tablaHash->tamano);
-
     for (int i=0; i < tablaHash->tamano; i++) {
         tablaHash->buckets[i] = crearBucket(*gruposDePalabras[i]);
     }

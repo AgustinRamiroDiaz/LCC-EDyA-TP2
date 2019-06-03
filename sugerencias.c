@@ -237,5 +237,5 @@ void imprimirSugerenciasEnArchivo(Palabra palabra, int linea, ListaDePalabras li
     } else {
         fwprintf(archivoDeCorrecciones, L"No se encontraron sugerencias.");
     }
-    wprintf(L"\n\n");
+    fwprintf(archivoDeCorrecciones, L"\n\n");
 }

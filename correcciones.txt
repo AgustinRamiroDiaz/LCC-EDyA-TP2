@@ -1,0 +1,24 @@
+Linea 1, "Este" no esta en el diccionario.
+Quizas quiso decir:
+este, oste, uste, éste, set, ate, s te, te, se
+
+Linea 1, "tiene" no esta en el diccionario.
+Quizas quiso decir:
+tizne, ti ene, lene, nene, pene, rene, sene, i ene, ene
+
+Linea 1, "errores" no esta en el diccionario.
+Quizas quiso decir:
+erro res, ero res, error s, error, erro re, error e
+
+Linea 1, "es" no esta en el diccionario.
+Quizas quiso decir:
+se, as, ea, eh, el, en, os, et, ex, e s, s, e
+
+Linea 2, "Guimpel" no esta en el diccionario.
+Quizas quiso decir:
+miel, piel, ipil, ámel, fiel, hiel, niel, riel
+
+Linea 3, "Chau" no esta en el diccionario.
+Quizas quiso decir:
+chau, jau, hao, tau, wau, haz, ha u, ha
+

@@ -1,9 +1,13 @@
+#include <assert.h>
 #include "archivo.h"
 #include "constantes.h"
 
 FILE * abrirArchivo(char * nombreDeArchivo, char * modo)
 {
-    return fopen(nombreDeArchivo, modo);
+    FILE * archivo = fopen(nombreDeArchivo, modo);
+    assert(NULL != archivo);
+
+    return archivo;
 }
 
 void cerrarArchivo(FILE * archivo)
