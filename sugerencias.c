@@ -195,7 +195,7 @@ int sugerirSiExiste(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * li
 
     if (palabraExiste) {
         Palabra * palabraCopiada = copiarPalabra(*palabra);
-        wprintf(L"palabra existe: %ls", palabraCopiada->letras);
+        wprintf(L"palabra existe: %ls\n", palabraCopiada->letras);
         fueAgregada = agregarPalabraAListaSiNoEstaRepetida(palabraCopiada, listaDeSugerencias);
 
         if (!fueAgregada) {
