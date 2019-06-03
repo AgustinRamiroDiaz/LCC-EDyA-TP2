@@ -56,6 +56,7 @@ int palabraEnTablaHash(TablaHash tablaHash, Palabra palabra);
 //Levanta la tabla hash desde el archivo
 TablaHash * cargarTablaHashDesdeArchivo(FILE * archivoDeTablaHash);
 
+//Libera la memoria reservada por la tabla hash
 void liberarTablaHash(TablaHash * tablaHash);
 
 #endif
