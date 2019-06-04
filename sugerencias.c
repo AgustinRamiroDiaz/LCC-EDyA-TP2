@@ -121,26 +121,19 @@ void generarSugerenciasAgregandoLetras(Palabra palabra, TablaHash tablaHash, Lis
 
 void generarSugerenciasReemplazandoLetras(Palabra palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
 {
-    Palabra * palabraCopiada;
+    Palabra * palabraCopiada = copiarPalabra(palabra);
+    wchar_t auxiliar;
 
-    for (wchar_t caracter = L'a'; caracter <= L'z'; caracter++) {
-        for (int pos = 0; pos < palabra.longitud; pos++) {
-            palabraCopiada = copiarPalabra(palabra);
-            reemplazarLetra(palabraCopiada, caracter, pos);
-            sugerirYLiberar(palabraCopiada, tablaHash, listaDeSugerencias);
-        }
-    }
-
-    int cantidadDeLetras = wcslen(LETRAS_ESPECIALES);
+    int cantidadDeLetras = wcslen(LETRAS_POSIBLES);
 
     for (int i = 0; i < cantidadDeLetras; i++) {
         for (int pos = 0; pos < palabra.longitud; pos++) {
-            palabraCopiada = copiarPalabra(palabra);
-            reemplazarLetra(palabraCopiada, LETRAS_ESPECIALES[i], pos);
-            //wprintf(L"%ls\n", palabraCopiada->letras);
-            sugerirYLiberar(palabraCopiada, tablaHash, listaDeSugerencias);
+            auxiliar = reemplazarLetra(palabraCopiada, LETRAS_POSIBLES[i], pos);
+            sugerirSiExiste(palabraCopiada, tablaHash, listaDeSugerencias);
+            reemplazarLetra(palabraCopiada, auxiliar, pos);
         }
     }
+    liberarPalabra(palabraCopiada);
 }
 
 ListaDePalabras * generarSugerenciasEliminandoLetras(Palabra palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
