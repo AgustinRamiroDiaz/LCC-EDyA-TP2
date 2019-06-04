@@ -9,6 +9,7 @@ ListaDePalabras * crearListaDePalabrasDesdeArchivo(FILE * archivo)
     ListaDePalabras * listaDePalabras = armarListaDePalabras(CAPACIDAD_INICIAL_LISTA);
 
     while(palabra = cargarPalabraDesdeArchivo(archivo)) {
+        pasarPalabraAMinuscula(palabra);
         agregarPalabraALista(palabra, listaDePalabras);
     }
 
@@ -237,4 +238,43 @@ void eliminarUltimaPalabraDeLista(ListaDePalabras * listaDePalabras)
     int posicionABorrar = listaDePalabras->cantidad - 1;
     liberarPalabra(listaDePalabras->palabras[posicionABorrar]);
     listaDePalabras->cantidad--;
+}
+
+void pasarPalabraAMinuscula(Palabra * palabra)
+{
+    for (int i = 0; i < palabra->longitud; i++) {
+        palabra->letras[i] = obtenerLetraEnMinuscula(palabra->letras[i]);
+    }
+}
+
+wchar_t obtenerLetraEnMinuscula (wchar_t letra)
+{
+    if (L'A' <= letra && letra <= L'Z') {
+        return letra + 32;
+    }
+
+    switch (letra) {
+        case L'Á':
+            return L'á';
+        case L'É':
+            return L'é';
+        case L'Í':
+            return L'í';
+        case L'Ó':
+            return L'ó';
+        case L'Ú':
+            return L'ú';
+        case L'Ä':
+            return L'ä';
+        case L'Ë':
+            return L'ë';
+        case L'Ï':
+            return L'ï';
+        case L'Ö':
+            return L'ö';
+        case L'Ü':
+            return L'ü';
+        default:
+            return letra;
+    }
 }

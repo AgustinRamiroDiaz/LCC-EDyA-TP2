@@ -88,4 +88,10 @@ int palabraEstaEnLista(Palabra palabra, ListaDePalabras listaDePalabras);
 //Elimina la ultima palabra de la lista
 void eliminarUltimaPalabraDeLista(ListaDePalabras * listaDePalabras);
 
+//Pasa las letras de la palabra a minuscula
+void pasarPalabraAMinuscula(Palabra * palabra);
+
+//Devuelve la letra pasada a minuscula
+wchar_t obtenerLetraEnMinuscula (wchar_t letra);
+
 #endif
