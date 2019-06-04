@@ -136,7 +136,7 @@ void generarSugerenciasReemplazandoLetras(Palabra palabra, TablaHash tablaHash, 
         for (int pos = 0; pos < palabra.longitud; pos++) {
             palabraCopiada = copiarPalabra(palabra);
             reemplazarLetra(palabraCopiada, LETRAS_ESPECIALES[i], pos);
-            wprintf(L"%ls\n", palabraCopiada->letras);
+            //wprintf(L"%ls\n", palabraCopiada->letras);
             sugerirYLiberar(palabraCopiada, tablaHash, listaDeSugerencias);
         }
     }
@@ -192,10 +192,8 @@ void generarSugerenciasSeparandoPalabra(Palabra palabra, TablaHash tablaHash, Li
 int sugerirSiExiste(Palabra * palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
 {
     int fueAgregada = 0, palabraExiste = palabraEnTablaHash(tablaHash, *palabra);
-
     if (palabraExiste) {
         Palabra * palabraCopiada = copiarPalabra(*palabra);
-        wprintf(L"palabra existe: %ls\n", palabraCopiada->letras);
         fueAgregada = agregarPalabraAListaSiNoEstaRepetida(palabraCopiada, listaDeSugerencias);
 
         if (!fueAgregada) {

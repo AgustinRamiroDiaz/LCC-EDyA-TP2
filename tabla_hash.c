@@ -83,7 +83,7 @@ int calcularCantidadDeBuckets(int cantidadDePalabras)
 int verificarTablaHash(TablaHash tablaHash, ListaDePalabras universo)
 {
     int numeroDeBucket, esValida = 1;
-    
+
     if (tablaHash.cantidadDeElementos != universo.cantidad){
         return 0;
     }
