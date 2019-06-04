@@ -1,5 +1,4 @@
 #include <malloc.h>
-#include <assert.h>
 #include "palabra.h"
 #include "constantes.h"
 
@@ -52,8 +51,6 @@ Palabra * crearPalabra(wchar_t * letras)
 
 void agregarPalabraALista(Palabra * palabra, ListaDePalabras * listaDePalabras)
 {
-    assert(palabra);
-
     if (listaDePalabras->cantidad == listaDePalabras->capacidad) {
         agrandarListaDePalabras(listaDePalabras);
     }

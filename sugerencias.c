@@ -52,12 +52,15 @@ ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash)
 
     generarSugerenciasModificandoPalabra(palabra, tablaHash, listaDeSugerencias);
     generarSugerenciasAgregandoLetras(palabra, tablaHash, listaDeSugerencias);
-    ListaDePalabras * palabrasConEliminaciones = generarSugerenciasEliminandoLetras(palabra, tablaHash, listaDeSugerencias);
-
-    if (listaDeSugerencias->cantidad < CANTIDAD_MINIMA_SUGERENCIAS) {
-        generarSugerenciasParaEliminaciones(palabrasConEliminaciones, tablaHash, listaDeSugerencias);
+    
+    if (palabra.longitud > 1) {
+        ListaDePalabras * palabrasConEliminaciones = generarSugerenciasEliminandoLetras(palabra, tablaHash, listaDeSugerencias);
+    
+        if (listaDeSugerencias->cantidad < CANTIDAD_MINIMA_SUGERENCIAS) {
+            generarSugerenciasParaEliminaciones(palabrasConEliminaciones, tablaHash, listaDeSugerencias);
+        }
+        liberarListaDePalabras(palabrasConEliminaciones);
     }
-    liberarListaDePalabras(palabrasConEliminaciones);
 
     return listaDeSugerencias;
 }
@@ -87,9 +90,11 @@ void generarSugerenciasParaEliminaciones(ListaDePalabras * palabrasConEliminacio
 
 void generarSugerenciasModificandoPalabra(Palabra palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
 {
-    generarSugerenciasIntercambiandoLetras(palabra, tablaHash, listaDeSugerencias);
     generarSugerenciasReemplazandoLetras(palabra, tablaHash, listaDeSugerencias);
-    generarSugerenciasSeparandoPalabra(palabra, tablaHash, listaDeSugerencias);
+    if (palabra.longitud > 1) {
+        generarSugerenciasIntercambiandoLetras(palabra, tablaHash, listaDeSugerencias);
+        generarSugerenciasSeparandoPalabra(palabra, tablaHash, listaDeSugerencias);
+    }
 }
 
 void generarSugerenciasIntercambiandoLetras(Palabra palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
@@ -137,7 +142,6 @@ void generarSugerenciasReemplazandoLetras(Palabra palabra, TablaHash tablaHash, 
         for (int pos = 0; pos < palabra.longitud; pos++) {
             palabraCopiada = copiarPalabra(palabra);
             reemplazarLetra(palabraCopiada, LETRAS_ESPECIALES[i], pos);
-            //wprintf(L"%ls\n", palabraCopiada->letras);
             sugerirYLiberar(palabraCopiada, tablaHash, listaDeSugerencias);
         }
     }

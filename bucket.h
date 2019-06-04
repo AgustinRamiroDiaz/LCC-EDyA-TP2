@@ -28,50 +28,44 @@ typedef struct {
     Palabra ** tablaHash;
 } Bucket;
 
-//Crea un bucket con todos los valores acordes a la lista de palabras
+// Crea un bucket que contenga a todas las palabras de la lista
 Bucket * crearBucket(ListaDePalabras listaDePalabras);
 
-//Arma un bucket vacio con la memoria reservada para la cantidad de palabras
+// Arma un bucket vacio con la memoria reservada para la cantidad de palabras
 Bucket * armarBucket(int cantidadDePalabras);
 
-//Calcula el tamano del bucket en base a la cantidad de palabras
+// Calcula el tamano del bucket en base a la cantidad de palabras
 int calcularTamanoDeBucket(int cantidadDePalabras);
 
-//Llena la tabla hash del bucket a partir de la lista de palabras
+// Llena la tabla hash del bucket a partir de la lista de palabras,
+// eligiendo una constante de hasheo de forma que sus hashes no colisionen
 void llenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras);
 
-//Intenta llenar la tabla hash del bucket con la constante de hasheo
-//sin que haya colisiones de la lista de palabras
+// Intenta llenar la tabla hash del bucket con la constante de hasheo
+// sin que haya colisiones de la lista de palabras. Devuelve veradero si 
+// pudo y falso si no
 int probarLlenarBucket(Bucket * bucket, ListaDePalabras listaDePalabras, unsigned long constanteDeHasheo);
 
-//Limpia el bucket poniendo en null las palabras de la tabla hash
+// Limpia el bucket poniendo en null las palabras de su tabla hash
 void limpiarBucket(Bucket * bucket);
 
-//Obtiene el hash secundario de la palabra con la constante de hasheo del bucket
+// Obtiene el hash secundario de la palabra con la constante de hasheo del bucket
 int obtenerHashSecundario(Bucket bucket, Palabra palabra);
 
-/*
-Imprime el bucket en el archivo de la forma:
-constanteDeHasheo capacidad
-palabra1
-palabra2
-...
-palabraTamano
-
-Donde funcionHashSecundaria(palabrai) = i
-*/
+// Imprime en el archivo la información necesaria sobre el bucket
+// para luego poder levantarlo desde el mismo
 void imprimirBucketEnArchivo(Bucket bucket, FILE * archivo);
 
-//Levanta el bucket desde el archivo como el formato de la funcion imprimirBucketEnArchivo
+// Levanta un bucket desde el archivo
 Bucket * cargarBucketDesdeArchivo(FILE * archivo);
 
-//Guarda las palabras del archivo en la tabla hash del bucket
+// Guarda las palabras del archivo en la tabla hash del bucket
 void cargarPalabrasEnBucketDesdeArchivo(Bucket * bucket, FILE * archivo);
 
-//Libera la memoria reservada de las palanras del bucket
+// Libera la memoria reservada por las palabras de la tabla hash del bucket
 void liberarPalabrasEnBucket(Bucket * bucket);
 
-//Libera la memoria reservada del bucket
+// Libera la memoria reservada por el bucket
 void liberarBucket(Bucket * bucket);
 
 #endif
