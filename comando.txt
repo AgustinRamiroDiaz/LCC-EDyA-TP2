@@ -1,3 +1,0 @@
-gcc preprocesador.c bucket.c hash.c palabra.c tabla_hash.c archivo.c -o preprocesador -lm
-gcc corrector.c bucket.c hash.c palabra.c tabla_hash.c archivo.c sugerencias.c -o corrector -lm
-

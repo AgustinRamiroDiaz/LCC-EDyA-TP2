@@ -35,8 +35,6 @@ FILE * obtenerArchivoDeCorrecciones(int argc, char const *argv[])
 int main(int argc, char const *argv[])
 {
     setlocale(LC_ALL, "");
-    fwide(stdout, 1);
-    fwide(stdin, 1);
 
     FILE * archivoDeTablaHash = abrirArchivo((char *) ARCHIVO_TABLA_HASH, "r");
     FILE * archivoDeEntrada = obtenerArchivoDeEntrada(argc, argv);
@@ -45,6 +43,7 @@ int main(int argc, char const *argv[])
     TablaHash * tablaHash = cargarTablaHashDesdeArchivo(archivoDeTablaHash);
 
     corregirArchivo(archivoDeEntrada, archivoDeCorrecciones, *tablaHash);
+    wprintf(L"Texto corregido\n");
 
     liberarTablaHashYPalabras(tablaHash);
     cerrarArchivo(archivoDeTablaHash);
