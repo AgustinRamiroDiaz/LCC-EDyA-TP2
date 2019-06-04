@@ -52,7 +52,7 @@ ListaDePalabras * generarSugerencias(Palabra palabra, TablaHash tablaHash)
 
     generarSugerenciasModificandoPalabra(palabra, tablaHash, listaDeSugerencias);
     generarSugerenciasAgregandoLetras(palabra, tablaHash, listaDeSugerencias);
-    
+
     if (palabra.longitud > 1) {
         ListaDePalabras * palabrasConEliminaciones = generarSugerenciasEliminandoLetras(palabra, tablaHash, listaDeSugerencias);
     
@@ -126,44 +126,40 @@ void generarSugerenciasAgregandoLetras(Palabra palabra, TablaHash tablaHash, Lis
 
 void generarSugerenciasReemplazandoLetras(Palabra palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
 {
-    Palabra * palabraCopiada;
+    Palabra * palabraCopiada = copiarPalabra(palabra);
+    wchar_t auxiliar;
 
-    for (wchar_t caracter = L'a'; caracter <= L'z'; caracter++) {
-        for (int pos = 0; pos < palabra.longitud; pos++) {
-            palabraCopiada = copiarPalabra(palabra);
-            reemplazarLetra(palabraCopiada, caracter, pos);
-            sugerirYLiberar(palabraCopiada, tablaHash, listaDeSugerencias);
-        }
-    }
-
-    int cantidadDeLetras = wcslen(LETRAS_ESPECIALES);
+    int cantidadDeLetras = wcslen(LETRAS_POSIBLES);
 
     for (int i = 0; i < cantidadDeLetras; i++) {
         for (int pos = 0; pos < palabra.longitud; pos++) {
-            palabraCopiada = copiarPalabra(palabra);
-            reemplazarLetra(palabraCopiada, LETRAS_ESPECIALES[i], pos);
-            sugerirYLiberar(palabraCopiada, tablaHash, listaDeSugerencias);
+            auxiliar = reemplazarLetra(palabraCopiada, LETRAS_POSIBLES[i], pos);
+            sugerirSiExiste(palabraCopiada, tablaHash, listaDeSugerencias);
+            reemplazarLetra(palabraCopiada, auxiliar, pos);
         }
     }
+    liberarPalabra(palabraCopiada);
 }
+
 
 ListaDePalabras * generarSugerenciasEliminandoLetras(Palabra palabra, TablaHash tablaHash, ListaDePalabras * listaDeSugerencias)
 {
     int existe;
-    Palabra * palabraCopiada;
+    Palabra * palabraCopiada = copiarPalabra(palabra);
     ListaDePalabras * palabrasGeneradas = armarListaDePalabras(CAPACIDAD_INICIAL_LISTA);
+    wchar_t auxiliar = eliminarLetra(palabraCopiada, 0);
 
-    for (int i = 0; i < palabra.longitud; i++) {
-        palabraCopiada = copiarPalabra(palabra);
-        eliminarLetra(palabraCopiada, i);
+    for (int i = 0; i < palabraCopiada->longitud; i++) {
         existe = sugerirSiExiste(palabraCopiada, tablaHash, listaDeSugerencias);
-
-        if (existe) {
-            liberarPalabra(palabraCopiada);
-        } else {
-            agregarPalabraALista(palabraCopiada, palabrasGeneradas);
+        wprintf(L"%ls\n", palabraCopiada->letras);
+        if (!existe) {
+            agregarPalabraALista(copiarPalabra(*palabraCopiada), palabrasGeneradas);
         }
+
+        auxiliar = reemplazarLetra(palabraCopiada, auxiliar, i);
     }
+
+    liberarPalabra(palabraCopiada);
 
     return palabrasGeneradas;
 }
