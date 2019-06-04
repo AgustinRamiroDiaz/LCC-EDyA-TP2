@@ -29,12 +29,14 @@ ListaDePalabras * armarListaDePalabras(int cantidadDePalabras)
 Palabra * cargarPalabraDesdeArchivo(FILE * archivo)
 {
     wchar_t buffer[LARGO_MAXIMO_PALABRA];
+    Palabra * palabra = NULL;
 
     if (1 == fwscanf(archivo, L"%ls", buffer)){
-        return crearPalabra(buffer);
+        palabra = crearPalabra(buffer);
+        pasarPalabraAMinuscula(palabra);
     }
 
-    return NULL;
+    return palabra;
 }
 
 Palabra * crearPalabra(wchar_t * letras)

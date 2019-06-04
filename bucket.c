@@ -108,7 +108,6 @@ Bucket * cargarBucketDesdeArchivo(FILE * archivo)
 void cargarPalabrasEnBucketDesdeArchivo(Bucket * bucket, FILE * archivo)
 {
     int posicionEnBucket;
-
     for (int i = 0; i < bucket->capacidad; i++) {
         fwscanf(archivo, L"%d", &posicionEnBucket);
         bucket->tablaHash[posicionEnBucket] = cargarPalabraDesdeArchivo(archivo);

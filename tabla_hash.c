@@ -44,7 +44,7 @@ ListaDePalabras ** agruparPalabras(TablaHash * tablaHash, ListaDePalabras * list
     for (int i = 0; i < listaDePalabras->cantidad; i++) {
         palabraActual = listaDePalabras->palabras[i];
         numeroDeBucket = obtenerHashPrincipal(*tablaHash, *palabraActual);
-        agregarPalabraALista(palabraActual, gruposDePalabras[numeroDeBucket]);
+        agregarPalabraAListaSiNoEstaRepetida(palabraActual, gruposDePalabras[numeroDeBucket]);
     }
 
     return gruposDePalabras;
@@ -83,7 +83,7 @@ int calcularCantidadDeBuckets(int cantidadDePalabras)
 int verificarTablaHash(TablaHash tablaHash, ListaDePalabras universo)
 {
     int numeroDeBucket, esValida = 1;
-
+    
     if (tablaHash.cantidadDeElementos != universo.cantidad){
         return 0;
     }

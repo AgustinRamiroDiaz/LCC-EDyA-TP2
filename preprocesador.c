@@ -36,9 +36,8 @@ int main(int argc, char const *argv[])
         wprintf(L"No se pudo hashear el universo\n");
     }
 
-
-    liberarTablaHash(tablaHash);
     liberarListaDePalabras(universo);
+    liberarTablaHash(tablaHash);
     cerrarArchivo(archivoDeUniverso);
     cerrarArchivo(archivoDeTablaHash);
 

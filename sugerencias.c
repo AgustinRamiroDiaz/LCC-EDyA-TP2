@@ -21,6 +21,7 @@ void corregirArchivo(FILE * archivoDeEntrada, FILE * archivoDeCorrecciones, Tabl
                 buffer[longitudDePalabra] = L'\0';
 
                 palabraLeida = crearPalabra(buffer);
+                pasarPalabraAMinuscula(palabraLeida);
                 verificarPalabra(palabraLeida, tablaHash, numeroDeLinea, archivoDeCorrecciones);
                 liberarPalabra(palabraLeida);
 
