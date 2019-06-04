@@ -136,7 +136,7 @@ void generarSugerenciasReemplazandoLetras(Palabra palabra, TablaHash tablaHash, 
         for (int pos = 0; pos < palabra.longitud; pos++) {
             palabraCopiada = copiarPalabra(palabra);
             reemplazarLetra(palabraCopiada, LETRAS_ESPECIALES[i], pos);
-            wprintf(L"%ls\n", palabraCopiada->letras);
+            //wprintf(L"%ls\n", palabraCopiada->letras);
             sugerirYLiberar(palabraCopiada, tablaHash, listaDeSugerencias);
         }
     }
