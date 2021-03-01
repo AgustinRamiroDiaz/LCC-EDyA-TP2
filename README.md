@@ -12,8 +12,8 @@ El preprocesador permite encontrar una funcion hash perfecta (como composición 
 
 En caso de que el archivo tabla-hash.txt no se encuentre generado o esté mal generado, debe correrse el preprocesador antes de utilizar el corrector.
 
-Para compilar el preprocesador puede utilizarse el siguiente comando:
-gcc preprocesador.c bucket.c hash.c palabra.c tabla_hash.c archivo.c -o preprocesador -lm
+* Para compilar el preprocesador puede utilizarse el siguiente comando:
+  * gcc preprocesador.c bucket.c hash.c palabra.c tabla_hash.c archivo.c -o preprocesador -lm
 
-Para compilar el corrector puede utilizarse el siguiente comando:
-gcc corrector.c bucket.c hash.c palabra.c tabla_hash.c archivo.c sugerencias.c -o corrector -lm
+* Para compilar el corrector puede utilizarse el siguiente comando:
+  * gcc corrector.c bucket.c hash.c palabra.c tabla_hash.c archivo.c sugerencias.c -o corrector -lm
